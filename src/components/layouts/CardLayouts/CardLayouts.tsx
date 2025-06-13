@@ -1,7 +1,7 @@
 import Card from "@/components/ui/Card/card";
 import { useState } from "react";
 import ModalCarousel from "@/components/ui/Card/ModalCarousel";
-import { title } from "process";
+
 const CardLayout = () => {
   const cards = [
     {
@@ -55,7 +55,6 @@ const CardLayout = () => {
         {cards.map((card, index) => (
           <Card
             key={index}
-            title={card.title}
             description={card.description}
             imageUrl={card.imageUrl}
             onClick={() => openModal(index)}

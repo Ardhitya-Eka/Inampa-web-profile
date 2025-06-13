@@ -1,6 +1,3 @@
-import card1 from "@/../../public/assets/card1.jpeg";
-import Image from "next/image";
-import Card from "@/components/ui/Card/card";
 import CardLayout from "@/components/layouts/CardLayouts/CardLayouts";
 const homelayout = () => {
   return (
@@ -26,7 +23,7 @@ const homelayout = () => {
         </div>
         <div className="-300 m-auto w-3/4">
           <div>
-            **INDONESIAN MARITIME PILOT'S ASSOCIATION** – Pengurus Asosiasi dan
+            **INDONESIAN MARITIME PILOTS ASSOCIATION** Pengurus Asosiasi dan
             seluruh Anggotanya merupakan Teamwork yang senantiasa bahu membahu
             dalam upaya meningkatkan kinerja Asosiasi. Sebagai satu Team Work,
             kami memiliki komitmen yang tinggi menjadikan Asosiasi INAMPA
