@@ -23,7 +23,7 @@ const AboutLayout = () => {
           <div className="space-y-6 text-gray-700 dark:text-gray-300 text-justify leading-relaxed">
             <p>
               <strong className="text-gray-900 dark:text-white">
-                INDONESIAN MARITIME PILOT'S ASSOCIATION
+                INDONESIAN MARITIME PILOTS ASSOCIATION
               </strong>{" "}
               – Pengurus Asosiasi dan seluruh Anggotanya merupakan teamwork yang
               senantiasa bahu membahu dalam upaya meningkatkan kinerja Asosiasi.
