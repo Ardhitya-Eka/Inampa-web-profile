@@ -1,66 +1,23 @@
+import AboutLayout from "@/components/layouts/AboutLayouts/AboutLayouts";
 import CardLayout from "@/components/layouts/CardLayouts/CardLayouts";
+import Navbar from "@/components/layouts/Navbar/Navbar";
 const homelayout = () => {
   return (
     <div>
-      <div
-        className="m
-      -2 bg-amber-700"
-      >
-        <div className="flex gap-5 bg-amber-600 justify-end mx-7 py-6">
-          <div>beranda</div>
-          <div>organisasi</div>
-          <div>regulasi</div>
-          <div>Galeri</div>
-          <div>Contacct</div>
-        </div>
+      {/* NAVBAR */}
+      <div>
+        <Navbar />
       </div>
       {/* TENTANG KAMI */}
       <div className="mt-9">
-        <div className="flex justify-center">
-          <div className="text-4xl font-bold text-slate-600 py-3">
-            TENTANG KAMI
-          </div>
-        </div>
-        <div className="-300 m-auto w-3/4">
-          <div>
-            **INDONESIAN MARITIME PILOTS ASSOCIATION** Pengurus Asosiasi dan
-            seluruh Anggotanya merupakan Teamwork yang senantiasa bahu membahu
-            dalam upaya meningkatkan kinerja Asosiasi. Sebagai satu Team Work,
-            kami memiliki komitmen yang tinggi menjadikan Asosiasi INAMPA
-            senantiasa sehat, tumbuh, dan berkembang secara berkelanjutan serta
-            mampu memberikan nilai tambah bagi para Pemangku Kepentingan
-            (Stakeholders). Keberhasilan Asosiasi berpangkal dari Visi, Misi dan
-            Nilai Asosiasi yang tertuang dalam komitmen kepada semua pihak yang
-            terkait dengan Asosiasi (Stakeholders) yaitu Mitra, pelanggan dan
-            kepentingan Nasional, masyarakat Kepelabuhanan dan Anggota Asosiasi
-            serta Visi untuk memberikan Pelayanan Jasa Pemanduan dan Penundaan
-            Kapal secara handal & maksimal dengan Mutu Pelayanan Kelas Dunia.
-            Komitmen ini menuntut Asosiasi untuk dapat melakukan yang terbaik
-            bagi Pengguna Jasa, serta peningkatan kualitas pelayanan demi
-            kepuasan pelanggan. Oleh karena itu, Asosiasi INAMPA mengundang
-            partisipasi semua pihak untuk berinvestasi di sektor Kepelabuhanan.
-            Peningkatan volume perdagangan telah melahirkan kebutuhan baru dalam
-            Manajemen Pelabuhan, yaitu Keamanan, Keselamatan, Pengelolaan
-            Risiko, Akselerasi Informasi, Harmoni antara Operasi Pelabuhan
-            dengan Lingkungan Alam dan Sosial serta Inovasi Teknologi.
-            Keseluruhan kebutuhan tersebut menghendaki untuk dilaksanakan dalam
-            suatu tata kelola Asosiasi yang baik (Good Association Governance
-            Systems). Untuk dapat lebih memperkenalkan dan mendekatkan Asosiasi
-            kepada Pengguna Jasa, Mitra Usaha, Mitra Kerja serta masyarakat
-            luas, kami sajikan Profil Asosiasi INAMPA yang memuat berbagai
-            informasi aktual mengenai asosiasi. Kami berharap uraian ini dapat
-            menjadi referensi yang bermanfaat baik bagi mitra maupun calon
-            investor dalam membangun kerjasama yang saling menguntungkan dengan
-            Asosiasi INAMPA di masa mendatang.
-          </div>
-        </div>
+        <AboutLayout />
       </div>
       {/* GALERI */}
-      <div className="mt-9">
-        <div className="flex justify-center">
-          <div className="text-4xl font-bold text-slate-600 py-3">
+      <div id="photo" className=" pt-16">
+        <div className="flex justify-center pt-5">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
             GALERI INAMPA
-          </div>
+          </h2>
         </div>
         <div>
           <CardLayout />
