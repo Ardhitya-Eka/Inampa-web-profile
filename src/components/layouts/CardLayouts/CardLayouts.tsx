@@ -50,7 +50,7 @@ const CardLayout = () => {
     setIsModalOpen(true);
   };
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
+    <div className="min-h-screen bg-gray-100 dark:bg-blue-900 p-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {cards.map((card, index) => (
           <Card

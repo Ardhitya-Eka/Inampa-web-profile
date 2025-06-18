@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Logo from "@/../../public/Logo Inampa.png";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -18,17 +20,41 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/70 backdrop-blur-md shadow-sm" : "bg-white"
+      className={`fixed top-0 left-0 w-full z-50 bg-white/20 backdrop-blur-md shadow-sm ${
+        scrolled ? "bg-white/70 backdrop-blur-md shadow-sm" : "transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold text-gray-900">
-          INAMPA
-        </Link>
+      <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
+        <div className="flex items-center">
+          {/* Logo */}
+          <Image
+            src={Logo}
+            alt="INAMPA Logo"
+            width={40}
+            height={40}
+            priority
+            className="mr-3"
+          />
+          <Link
+            href="/"
+            className={
+              scrolled
+                ? "text-xl font-bold text-blue-600"
+                : "text-xl font-bold text-white"
+            }
+          >
+            INAMPA
+          </Link>
+        </div>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
+        <nav
+          className={
+            scrolled
+              ? "hidden md:flex space-x-6 text-gray-900 font-medium"
+              : "hidden md:flex space-x-6 text-white font-medium"
+          }
+        >
           <a href="#home" className="hover:text-blue-600 transition">
             Home
           </a>

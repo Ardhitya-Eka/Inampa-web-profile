@@ -1,11 +1,68 @@
 import AboutLayout from "@/components/layouts/AboutLayouts/AboutLayouts";
 import CardLayout from "@/components/layouts/CardLayouts/CardLayouts";
 import Navbar from "@/components/layouts/Navbar/Navbar";
+import VisiMisi from "@/components/layouts/VisiMisiLayouts/VisiMisi";
+import LogoBanner from "@/../public/Banner.jpg";
+import { motion } from "framer-motion";
+import ProgramKerja from "@/components/layouts/ProgramKerjaLayouts/ProgramKerja";
+import Logo from "@/../../public/Logo Inampa.png";
+import logoImpa from "@/../../public/LOGO IMPA BARU.png";
+import logoJangkar from "@/../../public/JANGKAR PANDU BARU.png";
+import Image from "next/image";
+
 const homelayout = () => {
   return (
     <div>
       {/* NAVBAR */}
       <div>
+        <section
+          id="home"
+          className="relative flex items-center justify-center text-center bg-cover bg-center min-h-screen"
+          style={{ backgroundImage: `url(${LogoBanner.src})` }}
+        >
+          {/* Optional overlay */}
+          <div className="absolute inset-0 bg-black/50 z-0" />
+
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease: "easeOut" }}
+            className="text-white text-center px-4"
+          >
+            <div className="relative z-10 text-white px-4">
+              <div className="flex flex-wrap justify-center items-center gap-6 mt-8">
+                <Image
+                  width={200}
+                  height={200}
+                  alt="INAMPA Logo"
+                  className="object-contain"
+                  src={Logo.src}
+                />
+                <Image
+                  width={200}
+                  height={200}
+                  alt="INAMPA Logo"
+                  className="object-contain"
+                  src={logoImpa.src}
+                />
+                <Image
+                  width={200}
+                  height={200}
+                  alt="INAMPA Logo"
+                  className="object-contain"
+                  src={logoJangkar.src}
+                />
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                Welcome to INAMPA
+              </h1>
+              <p className="text-lg md:text-xl max-w-xl mx-auto">
+                Indonesian Maritime Pilot’s Association
+              </p>
+            </div>
+          </motion.div>
+        </section>
         <Navbar />
       </div>
       {/* TENTANG KAMI */}
@@ -26,42 +83,13 @@ const homelayout = () => {
       {/* VISI MISI */}
       <div className="mt-9">
         <div className="flex justify-center">
-          <div>VISI MISI</div>
+          <VisiMisi />
         </div>
-        <div className="m-auto w-1/2">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, a aut
-          non incidunt magni sequi consequuntur nostrum suscipit natus iste nemo
-          sunt. Error temporibus nostrum, illum obcaecati doloribus distinctio
-          consequuntur quaerat maiores assumenda sit voluptate soluta. Quisquam
-          ea alias vero eius ipsam error, nemo minus, maxime ratione, vitae
-          debitis quae dicta. Blanditiis quaerat assumenda, tenetur, ea tempore
-          eligendi pariatur consectetur enim totam minima mollitia tempora!
-          Earum voluptate, sint quasi dolores, maxime quam repudiandae iure
-          praesentium nisi modi, eveniet repellendus. Aperiam accusantium
-          tempora pariatur, tenetur laboriosam vitae mollitia ratione culpa
-          minus illo et totam, possimus voluptatum, aspernatur cum soluta. Unde
-          vitae nemo perferendis deserunt voluptates ab, obcaecati odio aut
-          deleniti corrupti laborum provident modi enim, error sed suscipit.
-          Aliquam nihil esse incidunt ducimus voluptates optio debitis saepe
-          eligendi ipsa beatae dolorum aspernatur nesciunt cumque dolor ea atque
-          dolorem ipsum odio asperiores, rerum quisquam assumenda dolores iusto
-          repellat. Aperiam, eum tenetur. Ullam aspernatur enim quas impedit
-          porro asperiores. Enim aliquid eligendi voluptatum beatae dignissimos
-          neque illum ipsum necessitatibus quisquam rerum nam itaque, deserunt
-          pariatur libero commodi facilis. Doloribus temporibus cumque sit nemo
-          id placeat, dignissimos, vero, deleniti ad itaque mollitia illum
-          repellendus at repellat. Blanditiis impedit vero ullam minima
-          recusandae ab delectus aperiam soluta cum at omnis nostrum quas illo,
-          quam ipsam facere tempora porro quo molestias error. Ea esse non
-          accusantium officia molestiae, mollitia, ipsam deserunt incidunt
-          commodi fugiat cum earum soluta quia iste, dolorem corrupti ad quas
-          reiciendis! Debitis et corrupti nulla quisquam, atque quos mollitia
-          eum doloribus ipsam deserunt fugit velit suscipit assumenda minima sed
-          officia, doloremque id voluptatem qui vel illo est maiores! Iure,
-          dolores ipsum? Debitis soluta libero necessitatibus non deleniti
-          aliquid suscipit facere, tempora rem, quo doloribus sapiente dolores
-          minus odio. Vero alias adipisci provident minus iste sequi labore
-          dignissimos. Quo ratione ad minima aliquid autem.
+      </div>
+      {/* Program Card */}
+      <div>
+        <div>
+          <ProgramKerja />
         </div>
       </div>
     </div>
