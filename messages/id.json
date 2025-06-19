@@ -1,0 +1,29 @@
+{
+  "Navbar": {
+    "home": "Beranda",
+    "about": "Tentang Kami",
+    "gallery": "Galeri",
+    "contact": "Kontak"
+  },
+  "home": {
+    "title": "Selamat Datang di INAMPA",
+    "subtitle": "Indonesian Maritime Pilot’s Association"
+  },
+  "about": {
+    "titleAbout": "Tentang Kami",
+    "paragraph1": "- Pengurus Asosiasi dan seluruh Anggotanya merupakan teamwork yang senantiasa bahu membahu dalam upaya meningkatkan kinerja Asosiasi. Sebagai satu Team Work, kami memiliki komitmen yang tinggi menjadikan Asosiasi INAMPA senantiasa sehat, tumbuh, dan berkembang secara berkelanjutan serta mampu memberikan nilai tambah bagi para Pemangku Kepentingan (Stakeholders).",
+    "paragraph2": "Keberhasilan Asosiasi berpangkal dari Visi, Misi dan Nilai Asosiasi yang tertuang dalam komitmen kepada semua pihak yang terkait dengan Asosiasi yaitu Mitra, pelanggan dan kepentingan Nasional, masyarakat Kepelabuhanan dan Anggota Asosiasi serta Visi untuk memberikan Pelayanan Jasa Pemanduan dan Penundaan Kapal secara handal & maksimal dengan Mutu Pelayanan Kelas Dunia.",
+    "paragraph3": "Komitmen ini menuntut Asosiasi untuk dapat melakukan yang terbaik bagi Pengguna Jasa, serta peningkatan kualitas pelayanan demi kepuasan pelanggan.",
+    "paragraph4": "Oleh karena itu, Asosiasi INAMPA mengundang partisipasi semua pihak untuk berinvestasi di sektor Kepelabuhanan. Peningkatan volume perdagangan telah melahirkan kebutuhan baru dalam Manajemen Pelabuhan, yaitu Keamanan, Keselamatan, Pengelolaan Risiko, Akselerasi Informasi, Harmoni antara Operasi Pelabuhan dengan Lingkungan Alam dan Sosial serta Inovasi Teknologi.",
+    "paragraph5": "Keseluruhan kebutuhan tersebut menghendaki untuk dilaksanakan dalam suatu tata kelola Asosiasi yang baik (Good Association Governance Systems). Kami sajikan Profil Asosiasi INAMPA yang memuat berbagai informasi aktual dan diharapkan dapat menjadi referensi yang bermanfaat untuk mitra maupun calon investor dalam membangun kerjasama yang saling menguntungkan."
+  },
+  "Gallery": {
+    "titleGallery": "Galeri Inampa",
+    "descriptionPhoto1": "Penyerahan Cenderamata antara Asisten Operasi Kepala Staf Angkatan Laut (Asops Kasal) Bapak Laksamana Muda TNI Dadi Hartanto, M.Tr.(Han), dan Presiden INAMPA Bapak Pasoroan Herman Harianja dalam Acara Ceremonial Penandatanganan Nota Kesepahaman (MoU) antara Tentara Nasional Indonesia yang diwakili oleh TNI-AL, pada tanggal 02 November 2021.",
+    "descriptionPhoto2": "KEPALA BADAN KEAMANAN LAUT (BAKAMLA)- RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI RABU, 04 NOVEMBER 2020 DI MABES BAKAMLA - RI, MENTENG -JAKARTA PUSAT.",
+    "descriptionPhoto3": "PRESIDENT INAMPA BERSAMA STAF MENGADAKAN COURTESSY CALL/KOLABORASI DENGAN DIREKTUR BALAI BESAR PENDIDIKAN PENYEGARAN & PENINGKATAN ILMU PELAYARAN (BP3IP)- KEMENHUB. DI SUNTER -JAKARTA, RABU 16 DESEMBER 2020.",
+    "descriptionPhoto4": "PRESIDENT INAMPA & STAF MELAKUKAN COURTESY CALL DENGAN DIREKTUR UTAMA PT. SAMUDERA INDONESIA BAPAK BANI MAULANA MULIA SELASA, 13 APRIL 2021 DI JAKARTA",
+    "descriptionPhoto5": "KEPALA STAF TNI-AL LAKSAMANATNI YUDO MARGONO, S.E., MM MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI SELASA,03 NOVEMBER 2020 DI MABESTNI -AL CILANGKAP-JAKARTA TIMUR.",
+    "descriptionPhoto6": "KEPALA BADAN KEAMANAN LAUT (BAKAMLA)- RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI RABU, 04 NOVEMBER 2020 DI MABES BAKAMLA - RI, MENTENG -JAKARTA PUSAT"
+  }
+}

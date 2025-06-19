@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/../../public/Logo Inampa.png";
-
+import TogleLanguage from "@/components/ui/button/TogleLanguage";
+import { useTranslations } from "next-intl";
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,9 +19,10 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const t = useTranslations("Navbar");
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 bg-white/20 backdrop-blur-md shadow-sm ${
+      className={`fixed top-0 left-0 w-full z-50 bg-white/20 backdrop-blur-md shadow-sm  ${
         scrolled ? "bg-white/70 backdrop-blur-md shadow-sm" : "transparent"
       }`}
     >
@@ -35,7 +37,7 @@ const Navbar = () => {
             priority
             className="mr-3"
           />
-          <Link
+          <a
             href="/"
             className={
               scrolled
@@ -44,31 +46,34 @@ const Navbar = () => {
             }
           >
             INAMPA
-          </Link>
+          </a>
         </div>
 
         {/* Desktop nav */}
         <nav
           className={
             scrolled
-              ? "hidden md:flex space-x-6 text-gray-900 font-medium"
-              : "hidden md:flex space-x-6 text-white font-medium"
+              ? "hidden md:flex space-x-6 text-gray-900 font-medium items-center"
+              : "hidden md:flex space-x-6 text-white font-medium items-center"
           }
         >
-          <a href="#home" className="hover:text-blue-600 transition">
-            Home
+          <a href="/" className="hover:text-blue-600 transition">
+            {t("home")}
           </a>
           <a href="#about" className="hover:text-blue-600 transition">
-            Tentang Kami
+            {t("about")}
           </a>
           <a href="#photo" className="hover:text-blue-600 transition">
-            Galeri
+            {t("gallery")}
           </a>
           <a href="#contact" className="hover:text-blue-600 transition">
-            Contact
+            {t("contact")}
           </a>
+          <TogleLanguage />
         </nav>
-
+        <div className="md:hidden">
+          <TogleLanguage />
+        </div>
         {/* Mobile menu button */}
         <button
           className="md:hidden text-gray-700"
@@ -91,28 +96,28 @@ const Navbar = () => {
               className="hover:text-blue-600"
               onClick={() => setMenuOpen(false)}
             >
-              Home
+              {t("home")}
             </a>
             <a
               href="#about"
               className="hover:text-blue-600"
               onClick={() => setMenuOpen(false)}
             >
-              Tentang Kami
+              {t("about")}
             </a>
             <a
               href="#photo"
               className="hover:text-blue-600"
               onClick={() => setMenuOpen(false)}
             >
-              Galeri
+              {t("gallery")}
             </a>
             <a
               href="#contact"
               className="hover:text-blue-600"
               onClick={() => setMenuOpen(false)}
             >
-              Contact
+              {t("contact")}
             </a>
           </nav>
         </div>

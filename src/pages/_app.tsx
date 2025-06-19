@@ -1,7 +1,15 @@
+// pages/_app.tsx
+import { IntlProvider as NextIntlProvider } from "next-intl";
+import { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import "@/styles/globals.css";
 
-import type { AppProps } from "next/app";
-
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  const { locale = "en" } = useRouter();
+
+  return (
+    <NextIntlProvider locale={locale} messages={pageProps.messages}>
+      <Component {...pageProps} />
+    </NextIntlProvider>
+  );
 }

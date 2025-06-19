@@ -32,8 +32,8 @@ const ProgramKerja = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+    <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative z-10 ">
         {cards.map((card, index) => (
           <div
             key={index}

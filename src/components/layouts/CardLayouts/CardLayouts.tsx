@@ -1,44 +1,40 @@
 import Card from "@/components/ui/Card/card";
 import { useState } from "react";
 import ModalCarousel from "@/components/ui/Card/ModalCarousel";
+import { useTranslations } from "next-intl";
 
 const CardLayout = () => {
+  const t = useTranslations("Gallery");
   const cards = [
     {
       title: "",
-      description:
-        "Penyerahan Cenderamata antara Asisten Operasi Kepala Staf Angkatan Laut (Asops Kasal) Bapak Laksamana Muda TNI Dadi Hartanto, M.Tr.(Han), dan Presiden INAMPA Bapak Pasoroan Herman Harianja dalam Acara Ceremonial Penandatanganan Nota Kesepahaman (MoU) antara Tentara Nasional Indonesia yang diwakili oleh TNI-AL, pada tanggal 02 November 2021.",
+      description: t("descriptionPhoto1"),
       imageUrl: "/card1.jpeg",
     },
     {
       title: "",
-      description:
-        "KEPALA BADAN KEAMANAN LAUT (BAKAMLA)- RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI RABU, 04 NOVEMBER 2020 DI MABES BAKAMLA - RI, MENTENG -JAKARTA PUSAT.",
+      description: t("descriptionPhoto2"),
       imageUrl: "/card2.jpeg",
     },
     {
       title: "",
       imageUrl: "/card3.jpeg",
-      description:
-        "PRESIDENT INAMPA BERSAMA STAF MENGADAKAN COURTESSY CALL/KOLABORASI DENGAN DIREKTUR BALAI BESAR PENDIDIKAN PENYEGARAN & PENINGKATAN ILMU PELAYARAN (BP3IP)- KEMENHUB. DI SUNTER -JAKARTA, RABU 16 DESEMBER 2020.",
+      description: t("descriptionPhoto3"),
     },
     {
       title: "",
       imageUrl: "/card4.jpeg",
-      description:
-        "PRESIDENT INAMPA & STAF MELAKUKAN COURTESY CALL DENGAN DIREKTUR UTAMA PT. SAMUDERA INDONESIA BAPAK BANI MAULANA MULIA SELASA, 13 APRIL 2021 DI JAKARTA",
+      description: t("descriptionPhoto4"),
     },
     {
       title: "",
       imageUrl: "/card5.jpeg",
-      description:
-        "KEPALA STAF TNI-AL LAKSAMANATNI YUDO MARGONO, S.E., MM MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI SELASA,03 NOVEMBER 2020 DI MABESTNI -AL CILANGKAP-JAKARTA TIMUR.",
+      description: t("descriptionPhoto5"),
     },
     {
       title: "",
       imageUrl: "/card6.jpeg",
-      description:
-        "KEPALA BADAN KEAMANAN LAUT (BAKAMLA)- RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI RABU, 04 NOVEMBER 2020 DI MABES BAKAMLA - RI, MENTENG -JAKARTA PUSAT",
+      description: t("descriptionPhoto6"),
     },
   ];
 
