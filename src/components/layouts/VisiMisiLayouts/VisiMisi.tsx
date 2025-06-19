@@ -1,4 +1,10 @@
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 const VisiMisi = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.15, // trigger when 15% is visible
+  });
   const dataVisiMisi = [
     {
       title: "Visi",
@@ -29,32 +35,48 @@ const VisiMisi = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto ">
-        <div className=" shadow-lg  p-6 text-left bg-white  hover:shadow-xl  border-2 border-gray-300 focus:border-cyan-500 focus:shadow-[0_0_10px_rgba(6,182,212,0.7)] transition rounded ">
-          {/* Visi, Misi, Nilai, dan Moto */}
-          {dataVisiMisi.map((item, index) => (
-            <div key={index} className="">
-              <h3 className="text-xl font-semibold text-blue-600 mb-3 ">
-                {item.title}
-              </h3>
-              <ul className="pl-5 space-y-1 text-gray-700 dark:text-gray-300 mb-4 ">
-                <li>{item.description}</li>
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="shadow-lg  p-6 text-left bg-white  hover:shadow-xl  border-2 border-gray-300 focus:border-cyan-500 focus:shadow-[0_0_10px_rgba(6,182,212,0.7)] transition rounded ">
-          {/* Nilai dan Moto */}
-          {NilaiMoto.map((item, index) => (
-            <div key={index}>
-              <h3 className="text-xl font-semibold text-blue-600 mb-3">
-                {item.title}
-              </h3>
-              <ul className="pl-5 space-y-1 text-gray-700 dark:text-gray-300 mb-4">
-                <li>{item.description}</li>
-              </ul>
-            </div>
-          ))}
-        </div>
+        {/* Motion from right to left */}
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          ref={ref}
+          animate={inView ? { opacity: 1.5, x: 0 } : {}}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <div className=" shadow-lg  p-6 text-left bg-white  hover:shadow-xl  border-2 border-gray-300 focus:border-cyan-500 focus:shadow-[0_0_10px_rgba(6,182,212,0.7)] transition rounded ">
+            {/* Visi, Misi, Nilai, dan Moto */}
+            {dataVisiMisi.map((item, index) => (
+              <div key={index} className="">
+                <h3 className="text-xl font-semibold text-blue-600 mb-3 ">
+                  {item.title}
+                </h3>
+                <ul className="pl-5 space-y-1 text-gray-700 dark:text-gray-300 mb-4 ">
+                  <li>{item.description}</li>
+                </ul>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+        {/* Motion from left to right */}
+        <motion.div
+          initial={{ x: 200, opacity: 0 }}
+          ref={ref}
+          animate={inView ? { opacity: 1.5, x: 0 } : {}}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <div className="shadow-lg  p-6 text-left bg-white  hover:shadow-xl  border-2 border-gray-300 focus:border-cyan-500 focus:shadow-[0_0_10px_rgba(6,182,212,0.7)] transition rounded ">
+            {/* Nilai dan Moto */}
+            {NilaiMoto.map((item, index) => (
+              <div key={index}>
+                <h3 className="text-xl font-semibold text-blue-600 mb-3">
+                  {item.title}
+                </h3>
+                <ul className="pl-5 space-y-1 text-gray-700 dark:text-gray-300 mb-4">
+                  <li>{item.description}</li>
+                </ul>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
