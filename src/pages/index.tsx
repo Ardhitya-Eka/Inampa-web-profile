@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { GetStaticPropsContext } from "next";
 import Footer from "@/components/layouts/Footer/Footer";
+import GetConnected from "@/components/ui/Card/contact";
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
   const selectedLocale = locale ?? "id";
@@ -111,11 +112,18 @@ const Home = () => {
       <div className="md:-mt-96">
         <ProgramKerja />
       </div>
-      <div className="mt-9">
+      <GetConnected />
+      <div className="mt-1">
         <div className="flex justify-center">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-            Get Conected With US{" "}
-          </h2>
+          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            Inampa
+          </h3>
+        </div>
+        <div className="flex justify-center">
+          <p className=" ">
+            ZERO WAITING TIME | ZERO ACCIDENT | CUSTOMER FOCUS | HIGH LEVEL OF
+            SERVICES | NO COMPLAINT
+          </p>
         </div>
       </div>
       <div>

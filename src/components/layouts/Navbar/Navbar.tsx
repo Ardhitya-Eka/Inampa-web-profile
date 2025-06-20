@@ -57,7 +57,7 @@ const Navbar = () => {
               : "hidden md:flex space-x-6 text-white font-medium items-center"
           }
         >
-          <a href="/" className="hover:text-blue-600 transition">
+          <a href="#home" className="hover:text-blue-600 transition">
             {t("home")}
           </a>
           <a href="#about" className="hover:text-blue-600 transition">
