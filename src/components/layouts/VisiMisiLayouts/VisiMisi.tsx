@@ -1,29 +1,35 @@
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+
 import { useInView } from "react-intersection-observer";
 const VisiMisi = () => {
+  const misi = useTranslations("misi");
+  const visi = useTranslations("visi");
+  const nilai = useTranslations("nilai");
+  const moto = useTranslations("moto");
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.15, // trigger when 15% is visible
   });
   const dataVisiMisi = [
     {
-      title: "Visi",
-      description: "Bekerja sama untuk melakukan sesuatu yang lebih baik.",
+      title: visi("title"),
+      description: visi("text"),
     },
     {
-      title: "Misi",
-      description: "Mengembangkan dan meningkatkan kinerja Asosiasi.",
+      title: misi("title"),
+      description: misi("text"),
     },
   ];
   const NilaiMoto = [
     {
-      title: "Nilai",
-      description: "Memberikan nilai tambah bagi para pemangku kepentingan.",
+      title: nilai("title"),
+      description: nilai("text"),
     },
     {
-      title: "Moto",
-      description:
-        "Mewujudkan Asosiasi menjadi organisasi yang berkembang dan berkualitas.",
+      title: moto("title"),
+      description: moto("text"),
     },
   ];
   return (

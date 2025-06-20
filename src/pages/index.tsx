@@ -24,8 +24,8 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 }
 
 const Home = () => {
-  const t = useTranslations("home");
-  const g = useTranslations("Gallery");
+  const t = useTranslations("Banner");
+
   return (
     <div>
       {/* NAVBAR */}
@@ -84,14 +84,7 @@ const Home = () => {
       </div>
       {/* GALERI */}
       <div id="photo" className=" pt-16">
-        <div className="flex justify-center pt-5">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-            {g("titleGallery")}
-          </h2>
-        </div>
-        <div>
-          <CardLayout />
-        </div>
+        <CardLayout />
       </div>
       {/* VISI MISI */}
       <div className="mt-9">
@@ -113,14 +106,15 @@ const Home = () => {
         <ProgramKerja />
       </div>
       <GetConnected />
+      {/* FOOTER Slogan */}
       <div className="mt-1">
         <div className="flex justify-center">
           <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
             Inampa
           </h3>
         </div>
-        <div className="flex justify-center">
-          <p className=" ">
+        <div className="flex justify-center -mt-5">
+          <p className="">
             ZERO WAITING TIME | ZERO ACCIDENT | CUSTOMER FOCUS | HIGH LEVEL OF
             SERVICES | NO COMPLAINT
           </p>

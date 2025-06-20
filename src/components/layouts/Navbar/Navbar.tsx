@@ -64,7 +64,7 @@ const Navbar = () => {
             {t("about")}
           </a>
           <a href="#photo" className="hover:text-blue-600 transition">
-            {t("gallery")}
+            {t("Gallery")}
           </a>
           <a href="#contact" className="hover:text-blue-600 transition">
             {t("contact")}
@@ -110,7 +110,7 @@ const Navbar = () => {
               className="hover:text-blue-600"
               onClick={() => setMenuOpen(false)}
             >
-              {t("gallery")}
+              {t("Gallery")}
             </a>
             <a
               href="#contact"

@@ -2,11 +2,11 @@
   "Navbar": {
     "home": "Home",
     "about": "About",
-    "gallery": "Gallery",
+    "Gallery": "Gallery",
     "program": "Program",
     "contact": "Contact"
   },
-  "home": {
+  "Banner": {
     "title": "Welcome to INAMPA",
     "subtitle": "Indonesian Maritime Pilot’s Association"
   },
@@ -18,7 +18,7 @@
     "paragraph4": "Therefore, the INAMPA Association invites all parties to participate in investing in the port sector. The increase in trade volume has created new needs in Port Management, namely Security, Safety, Risk Management, Information Acceleration, Harmony between Port Operations and the Natural and Social Environment, and Technological Innovation.",
     "paragraph5": "All these needs require implementation within a sound Association governance system (Good Association Governance Systems). We present the INAMPA Association Profile, which contains various up-to-date information and is intended to serve as a useful reference for partners and potential investors in building mutually beneficial collaborations."
   },
-  "Gallery": {
+  "Photo": {
     "titleGallery": "Inampa Gallery",
     "descriptionPhoto1": "The exchange of souvenirs between the Assistant Chief of Staff for Operations of the Indonesian Navy (Asops Kasal), Rear Admiral TNI Dadi Hartanto, M.Tr. (Han), and the President of INAMPA, Mr. Pasoroan Herman Harianja, during the ceremonial signing of the Memorandum of Understanding (MoU) between the Indonesian National Armed Forces, represented by the Indonesian Navy (TNI-AL), on November 2, 2021.",
     "descriptionPhoto2": "HEAD OF THE MARITIME SECURITY AGENCY (BAKAMLA) - RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. RECEIVED A COURTESY CALL FROM THE PRESIDENT, EXECUTIVE BOARD MEMBERS OF THE CENTRAL EXECUTIVE BOARD (DPP) AND REGIONAL EXECUTIVE BOARDS (DPW) OF INAMPA ON WEDNESDAY, 4 NOVEMBER 2020 AT THE BAKAMLA HEADQUARTERS - RI, MENTENG - CENTRAL JAKARTA.",
@@ -26,5 +26,21 @@
     "descriptionPhoto4": "The President of Inampa and staff paid a courtesy call to the CEO of PT. Samudera Indonesia, Mr. Bani Maulana Mulia, on Tuesday, April 13, 2021, in Jakarta.",
     "descriptionPhoto5": "Chief of Staff of the Indonesian Navy, Admiral Yudo Margono, S.E., MM, received a courtesy call from the President, DPP & DPW Inampa on Tuesday, November 3, 2020, at MABESTNI-AL Cilangkap, East Jakarta.",
     "descriptionPhoto6": "HEAD OF THE MARITIME SECURITY AGENCY (BAKAMLA) - RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. RECEIVED A COURTESY CALL FROM THE PRESIDENT, EXECUTIVE BOARD MEMBERS OF THE CENTRAL EXECUTIVE BOARD (DPP) AND REGIONAL EXECUTIVE BOARDS (DPW) OF INAMPA ON WEDNESDAY, 4 NOVEMBER 2020 AT THE BAKAMLA HEADQUARTERS - RI, MENTENG - CENTRAL JAKARTA."
+  },
+  "visi": {
+    "title": "Vision",
+    "text": "Working together to do something better."
+  },
+  "misi": {
+    "title": "Mission",
+    "text": "Developing and improving the performance of the Association."
+  },
+  "nilai": {
+    "title": "Value",
+    "text": "Providing added value for stakeholders."
+  },
+  "moto": {
+    "title": "Motto",
+    "text": "Transforming the Association into a thriving and high-quality organization."
   }
 }
