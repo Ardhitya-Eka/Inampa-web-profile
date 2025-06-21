@@ -9,7 +9,7 @@ import {
 
 export default function GetConnected() {
   return (
-    <section className="py-16 px-4 bg-gray-50 text-center">
+    <section id="contact" className="py-16 px-4 bg-gray-50 text-center">
       <h2 className="text-3xl font-bold mb-4 text-gray-800">
         Get Connected With Us
       </h2>

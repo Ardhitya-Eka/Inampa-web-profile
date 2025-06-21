@@ -12,7 +12,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { GetStaticPropsContext } from "next";
 import Footer from "@/components/layouts/Footer/Footer";
-import GetConnected from "@/components/ui/Card/contact";
+import GetConnected from "@/components/layouts/Contact/ContactLayout";
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
   const selectedLocale = locale ?? "id";
@@ -114,7 +114,7 @@ const Home = () => {
           </h3>
         </div>
         <div className="flex justify-center -mt-5">
-          <p className="">
+          <p className="px-4">
             ZERO WAITING TIME | ZERO ACCIDENT | CUSTOMER FOCUS | HIGH LEVEL OF
             SERVICES | NO COMPLAINT
           </p>
