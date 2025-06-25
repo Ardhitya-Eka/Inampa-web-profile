@@ -14,18 +14,8 @@ import { GetStaticPropsContext } from "next";
 import Footer from "@/components/layouts/Footer/Footer";
 import GetConnected from "@/components/layouts/Contact/ContactLayout";
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  const selectedLocale = locale ?? "id";
-  return {
-    props: {
-      messages: (await import(`../../messages/${selectedLocale}.json`)).default,
-    },
-  };
-}
-
 const Home = () => {
   const t = useTranslations("Banner");
-
   return (
     <div>
       {/* NAVBAR */}
@@ -48,24 +38,27 @@ const Home = () => {
             <div className="relative z-10 text-white px-4">
               <div className="flex flex-wrap justify-center items-center gap-6 mt-8">
                 <Image
-                  width={200}
-                  height={200}
+                  width={300}
+                  height={300}
                   alt="INAMPA Logo"
                   className="object-contain"
                   src={logoJangkar.src}
                 />
+                <div className="object-contain">
+                  <Image
+                    width={400}
+                    height={400}
+                    alt="INAMPA Logo"
+                    className="object-contain opacity-100"
+                    src={Logo.src}
+                  />
+                </div>
+
                 <Image
-                  width={200}
-                  height={200}
+                  width={300}
+                  height={300}
                   alt="INAMPA Logo"
-                  className="object-contain"
-                  src={Logo.src}
-                />
-                <Image
-                  width={200}
-                  height={200}
-                  alt="INAMPA Logo"
-                  className="object-contain"
+                  className="object-contain "
                   src={logoImpa.src}
                 />
               </div>
@@ -109,15 +102,12 @@ const Home = () => {
       {/* FOOTER Slogan */}
       <div className="mt-1">
         <div className="flex justify-center">
-          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-            Inampa
+          <h3 className="text-3xl font-bold text-slate-500 dark:text-white mb-8 text-center">
+            INAMPA MARITIME ADVISOR TO THE WORLD
           </h3>
         </div>
         <div className="flex justify-center -mt-5">
-          <p className="px-4">
-            ZERO WAITING TIME | ZERO ACCIDENT | CUSTOMER FOCUS | HIGH LEVEL OF
-            SERVICES | NO COMPLAINT
-          </p>
+          <p className="px-4">"BUILDING RESPONSIBLE PARTNERSHIPS"</p>
         </div>
       </div>
       <div>
@@ -126,5 +116,14 @@ const Home = () => {
     </div>
   );
 };
+
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  const selectedLocale = locale ?? "id";
+  return {
+    props: {
+      messages: (await import(`../../messages/${selectedLocale}.json`)).default,
+    },
+  };
+}
 
 export default Home;

@@ -32,8 +32,26 @@ const AboutLayout = () => {
             </p>
 
             <p>{t("paragraph2")}</p>
+            <div className="md:px-4">
+              <ol className="list-disc list-inside">
+                <li>Maritime Safety (Keselamatan Maritim).</li>
+                <li>Maritime Security (Keamanan Maritim).</li>
+                <li>Maritime Environment (Lingkungan Maritim).</li>
+                <li className="whitespace-nowrap">
+                  Keberlanjutan Maritim (Maritime Sustainability).
+                </li>
+              </ol>
+            </div>
 
             <p>{t("paragraph3")}</p>
+            <div className="md:px-4">
+              <ul className="list-disc list-inside">
+                <li>Internasional</li>
+                <li>Regional</li>
+                <li>Nasional (National)</li>
+                <li>Kearifan Lokal (Local Wisdom)</li>
+              </ul>
+            </div>
 
             <p>{t("paragraph4")}</p>
 
