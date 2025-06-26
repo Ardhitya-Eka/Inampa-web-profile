@@ -65,10 +65,9 @@ const Home = () => {
 };
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  const selectedLocale = locale ?? "id";
   return {
     props: {
-      messages: (await import(`../../messages/${selectedLocale}.json`)).default,
+      messages: (await import(`../../messages/${locale}`)).default,
     },
   };
 }

@@ -1,15 +1,11 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-
+const config: NextConfig = {
   i18n: {
-    locales: ["id", "en"], // ✅ Supported languages
-    defaultLocale: "id", // ✅ Default language
+    locales: ["id", "en"],
+    defaultLocale: "id",
+    localeDetection: false,
   },
-  reactStrictMode: true,
 };
 
-module.exports = nextConfig;
-
-export default nextConfig;
+export default config;

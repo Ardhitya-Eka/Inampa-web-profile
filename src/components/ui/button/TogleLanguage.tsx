@@ -14,7 +14,14 @@ export default function TogleLanguage() {
   const handleChangeLanguage = () => {
     Cookies.set("NEXT_LOCALE", toggleLocale, { expires: 365 });
     startTransition(() => {
-      router.push(pathname, asPath, { locale: toggleLocale });
+      router.replace(
+        `/${toggleLocale}${pathname}`,
+        `/${toggleLocale}${asPath}`,
+        {
+          locale: toggleLocale,
+          scroll: false,
+        }
+      );
     });
   };
 
