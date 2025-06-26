@@ -95,7 +95,7 @@ const Home = () => {
         </div>
       </div>
       {/* Program Card */}
-      <div className="md:-mt-96">
+      <div className="lg:-mt-96 ">
         <ProgramKerja />
       </div>
       <GetConnected />
