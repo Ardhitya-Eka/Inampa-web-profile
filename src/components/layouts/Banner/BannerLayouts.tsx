@@ -10,7 +10,7 @@ const BannerLayouts = () => {
   return (
     <div
       id="home"
-      className="relative flex items-center justify-center text-center bg-cover bg-center min-h-screen"
+      className="relative flex items-center justify-center text-center bg-cover bg-center min-h-screen max-h-full"
       style={{ backgroundImage: `url(${LogoBanner.src})` }}
     >
       {/* Optional overlay */}
@@ -26,16 +26,16 @@ const BannerLayouts = () => {
         <div className="relative z-10 text-white px-4">
           <div className="flex flex-wrap justify-center items-center gap-6 mt-8">
             <Image
-              width={300}
-              height={300}
+              width="300"
+              height="300"
               alt="INAMPA Logo"
               className="object-contain"
               src={logoJangkar.src}
             />
             <div className="object-contain">
               <Image
-                width={400}
-                height={400}
+                width="400"
+                height="400"
                 alt="INAMPA Logo"
                 className="object-contain opacity-100"
                 src={Logo.src}
@@ -43,8 +43,8 @@ const BannerLayouts = () => {
             </div>
 
             <Image
-              width={300}
-              height={300}
+              width="300"
+              height="300"
               alt="INAMPA Logo"
               className="object-contain "
               src={logoImpa.src}

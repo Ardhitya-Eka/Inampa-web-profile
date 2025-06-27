@@ -12,9 +12,9 @@ import BannerLayouts from "@/components/layouts/Banner/BannerLayouts";
 
 const Home = () => {
   return (
-    <>
+    <div>
       {/* NAVBAR */}
-      <div>
+      <div className="">
         <BannerLayouts />
         <Navbar />
       </div>
@@ -42,7 +42,7 @@ const Home = () => {
         </div>
       </div>
       {/* Program Card */}
-      <div className="lg:-mt-96 ">
+      <div className="lg:-mt-96 md:-mt-70 sm:-mt-60">
         <ProgramKerja />
       </div>
       <GetConnected />
@@ -60,7 +60,7 @@ const Home = () => {
       <div>
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 

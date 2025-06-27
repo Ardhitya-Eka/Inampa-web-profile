@@ -11,7 +11,10 @@ const AboutLayout = () => {
   const t = useTranslations("about");
 
   return (
-    <section id="about" className="py-16 px-4 bg-white dark:bg-gray-900 mb-10">
+    <section
+      id="about"
+      className="py-16 px-4 bg-white dark:bg-gray-900 mb-10 max-w-full"
+    >
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 40 }}
@@ -33,13 +36,11 @@ const AboutLayout = () => {
 
             <p>{t("paragraph2")}</p>
             <div className="md:px-4">
-              <ol className="list-disc list-inside">
+              <ol className="list-disc list-inside ">
                 <li>Maritime Safety (Keselamatan Maritim).</li>
                 <li>Maritime Security (Keamanan Maritim).</li>
                 <li>Maritime Environment (Lingkungan Maritim).</li>
-                <li className="whitespace-nowrap">
-                  Keberlanjutan Maritim (Maritime Sustainability).
-                </li>
+                <li>Keberlanjutan Maritim (Maritime Sustainability).</li>
               </ol>
             </div>
 
@@ -49,7 +50,7 @@ const AboutLayout = () => {
                 <li>Internasional</li>
                 <li>Regional</li>
                 <li>Nasional (National)</li>
-                <li>Kearifan Lokal (Local Wisdom)</li>
+                <li className="pt-2">Kearifan Lokal (Local Wisdom)</li>
               </ul>
             </div>
 
