@@ -51,7 +51,7 @@ const VisiMisi = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto max-lg:hidden ">
         {/* Motion from right to left */}
         <motion.div
-          initial={{ x: -100, opacity: 0 }}
+          initial={{ x: -50, opacity: 0 }}
           ref={ref}
           animate={inView ? { opacity: 1.5, x: 0 } : {}}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -72,7 +72,7 @@ const VisiMisi = () => {
         </motion.div>
         {/* Motion from left to right */}
         <motion.div
-          initial={{ x: 200, opacity: 0 }}
+          initial={{ x: 50, opacity: 0 }}
           ref={ref}
           animate={inView ? { opacity: 1.5, x: 0 } : {}}
           transition={{ duration: 1, ease: "easeOut" }}
