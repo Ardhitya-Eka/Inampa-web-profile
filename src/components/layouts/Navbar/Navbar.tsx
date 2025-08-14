@@ -9,7 +9,7 @@ import Logo from "@/../../public/Logo Inampa.png";
 import TogleLanguage from "@/components/ui/button/TogleLanguage";
 import { useTranslations } from "next-intl";
 const Navbar = () => {
-  const pdfUrl = "/pdf/inampa.pdf";
+  const pdfUrl = "/pdf/Inampa.pdf";
   const pdfName = "Download pdf";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
