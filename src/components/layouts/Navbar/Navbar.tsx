@@ -2,15 +2,18 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/../../public/Logo Inampa.png";
 import TogleLanguage from "@/components/ui/button/TogleLanguage";
 import { useTranslations } from "next-intl";
 const Navbar = () => {
+  const pdfUrl = "/pdf/inampa.pdf";
+  const pdfName = "Download pdf";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -69,6 +72,40 @@ const Navbar = () => {
           <a href="#contact" className="hover:text-blue-600 transition">
             {t("contact")}
           </a>
+          <div>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center gap-1"
+            >
+              {t("organization")}
+              {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            </button>
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className={
+                    scrolled
+                      ? `absolute  top-full w-40  overflow-hidden shadow-xl border-t border-gray-700 bg-white backdrop-blur-md rounded-md`
+                      : `absolute  top-full w-40  overflow-hidden shadow-2xl border-t border-gray-700 bg-white/20 backdrop-blur-md rounded-md`
+                  }
+                >
+                  <motion.a
+                    href={pdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
+                  >
+                    {pdfName}
+                  </motion.a>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <TogleLanguage />
         </nav>
         <div className="md:hidden">
@@ -118,6 +155,13 @@ const Navbar = () => {
               onClick={() => setMenuOpen(false)}
             >
               {t("contact")}
+            </a>
+            <a
+              href={pdfUrl}
+              className="hover:text-blue-600"
+              onClick={() => setMenuOpen(false)}
+            >
+              {t("organization")}
             </a>
           </nav>
         </div>

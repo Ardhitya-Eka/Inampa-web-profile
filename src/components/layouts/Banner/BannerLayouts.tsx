@@ -24,10 +24,10 @@ const BannerLayouts = () => {
         className="text-white text-center px-4"
       >
         <div className="relative z-10 text-white px-4">
-          <div className="flex flex-wrap justify-center items-center gap-6 mt-8">
+          <div className="flex max-lg:flex-wrap justify-center items-center gap-6 mt-8">
             <Image
-              width="300"
-              height="300"
+              width="400"
+              height="400"
               alt="INAMPA Logo"
               className="object-contain"
               src={logoJangkar.src}
@@ -41,12 +41,11 @@ const BannerLayouts = () => {
                 src={Logo.src}
               />
             </div>
-
             <Image
-              width="300"
-              height="300"
+              width="400"
+              height="400"
               alt="INAMPA Logo"
-              className="object-contain "
+              className="object-contain"
               src={logoImpa.src}
             />
           </div>
