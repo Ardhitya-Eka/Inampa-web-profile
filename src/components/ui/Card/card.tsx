@@ -1,13 +1,14 @@
 // components/Card.tsx
+
 import Image from "next/image";
 
 interface CardProps {
   description: string;
-  imageUrl: string;
+  url: string;
   onClick: () => void;
 }
 
-export default function Card({ description, imageUrl, onClick }: CardProps) {
+export default function Card({ description, url, onClick }: CardProps) {
   return (
     <div
       onClick={onClick}
@@ -17,7 +18,7 @@ export default function Card({ description, imageUrl, onClick }: CardProps) {
       <div className="relative w-full h-56 overflow-hidden">
         <Image
           alt="Card Image"
-          src={imageUrl}
+          src={url}
           fill
           className="object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-105"
         />

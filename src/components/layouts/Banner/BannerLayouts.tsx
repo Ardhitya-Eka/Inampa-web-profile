@@ -2,7 +2,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import LogoBanner from "@/../public/Banner.jpg";
 import logoJangkar from "@/../../public/JANGKAR PANDU BARU.png";
-import Logo from "@/../../public/Logo Inampa.png";
+import logoInampa from "@/../../public/logoBanner.png";
 import logoImpa from "@/../../public/LOGO IMPA BARU.png";
 import { useTranslations } from "next-intl";
 const BannerLayouts = () => {
@@ -34,11 +34,11 @@ const BannerLayouts = () => {
             />
             <div className="object-contain">
               <Image
-                width="400"
-                height="400"
+                width="300"
+                height="300"
                 alt="INAMPA Logo"
                 className="object-contain opacity-100"
-                src={Logo.src}
+                src={logoInampa.src}
               />
             </div>
             <Image

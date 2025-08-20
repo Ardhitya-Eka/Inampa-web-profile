@@ -19,15 +19,6 @@
     "paragraph4": "Maritime Pilot Officers have contributed greatly to Indonesia's maritime safety for commercial and non-commercial vessels entering/leaving ports in Indonesia, including other waters that require safe, secure, efficient, and effective sailing services. These activities are closely related to Indonesia's competitiveness in the maritime sector and its decline in activity.",
     "paragraph5": "Since 2017, INAMPA has been a member of the International Maritime Pilots' Association (IMPA), which is a strategic partner of the IMO (International Maritime Organization), a UN agency that oversees global maritime safety with approximately 185 member countries."
   },
-  "Photo": {
-    "titleGallery": "INAMPA Gallery",
-    "descriptionPhoto1": "The exchange of souvenirs between the Assistant Chief of Staff for Operations of the Indonesian Navy (Asops Kasal), Rear Admiral TNI Dadi Hartanto, M.Tr. (Han), and the President of INAMPA, Mr. Pasoroan Herman Harianja, during the ceremonial signing of the Memorandum of Understanding (MoU) between the Indonesian National Armed Forces, represented by the Indonesian Navy (TNI-AL), on November 2, 2021.",
-    "descriptionPhoto2": "HEAD OF THE MARITIME SECURITY AGENCY (BAKAMLA) - RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. RECEIVED A COURTESY CALL FROM THE PRESIDENT, EXECUTIVE BOARD MEMBERS OF THE CENTRAL EXECUTIVE BOARD (DPP) AND REGIONAL EXECUTIVE BOARDS (DPW) OF INAMPA ON WEDNESDAY, 4 NOVEMBER 2020 AT THE BAKAMLA HEADQUARTERS - RI, MENTENG - CENTRAL JAKARTA.",
-    "descriptionPhoto3": "The President of INAMPA, along with his staff, conducted a courtesy call/collaboration with the Director of the National Center for Maritime Education and Training (BP3IP) under the Ministry of Transportation. The meeting took place in Sunter, Jakarta, on Wednesday, December 16, 2020.",
-    "descriptionPhoto4": "The President of Inampa and staff paid a courtesy call to the CEO of PT. Samudera Indonesia, Mr. Bani Maulana Mulia, on Tuesday, April 13, 2021, in Jakarta.",
-    "descriptionPhoto5": "Chief of Staff of the Indonesian Navy, Admiral Yudo Margono, S.E., MM, received a courtesy call from the President, DPP & DPW Inampa on Tuesday, November 3, 2020, at MABESTNI-AL Cilangkap, East Jakarta.",
-    "descriptionPhoto6": "HEAD OF THE MARITIME SECURITY AGENCY (BAKAMLA) - RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. RECEIVED A COURTESY CALL FROM THE PRESIDENT, EXECUTIVE BOARD MEMBERS OF THE CENTRAL EXECUTIVE BOARD (DPP) AND REGIONAL EXECUTIVE BOARDS (DPW) OF INAMPA ON WEDNESDAY, 4 NOVEMBER 2020 AT THE BAKAMLA HEADQUARTERS - RI, MENTENG - CENTRAL JAKARTA."
-  },
   "visi": {
     "title": "Vision",
     "text": "Working together to do something better."
@@ -43,5 +34,28 @@
   "moto": {
     "title": "Motto",
     "text": "Transforming the Association into a thriving and high-quality organization."
+  },
+  "ProgramJangkaPendek": {
+    "title": "Short-Term Program",
+    "paragraph1": "1. Registering members from Indonesian ports, Regions I, II, III, IV, V, and INAMPA specifically for the Batam and ASEAN regions.",
+    "paragraph2": "2. Socialization of all INAMPA Work Programs.",
+    "paragraph3": "3. Establishing the Secretariat and its activities.",
+    "paragraph4": "4. Register INAMPA with the International Maritime Pilot Association (IMPA) in London, England, according to schedule.",
+    "paragraph5": "5. Encouraging the acceleration of the Malacca Strait Pilotage, ALKI-I and ALKI-II.",
+    "paragraph6": "6. Revision of Minister of Transportation Regulation No. PM 57 of 2015 concerning Ship Pilotage."
+  },
+  "ProgramJangkaMenengah": {
+    "title": "Medium-Term Program (3 Years)",
+    "paragraph1": "1. Evaluate the progress of the Short-Term Work Program and follow up on it.",
+    "paragraph2": "2. Promoting Guidance Education Institutions in Indonesia must comply with International Standards, namely (IMO & IMPA).",
+    "paragraph3": "3. Improving the quality of professionalism for all members.",
+    "paragraph4": "4. Promoting INAMPA and encouraging its members to work toward greater prosperity by analyzing their minimum standard income.",
+    "paragraph5": "5. Seeking other suitable employment for all members.",
+    "paragraph6": "6. Providing advice on maritime safety in conjunction with relevant agencies concerned with safety regulations for pilots on duty in accordance with IMPA recommendations.",
+    "paragraph7": "7. Require all companies/institutions to insure guides because they work with high risks for all INAMPA members."
+  },
+  "ProgramJangkaPanjang": {
+    "title": "Long-Term Program (5 Years)",
+    "paragraph1": "Encouraging INAMPA members to obtain International Standards qualifications (IMO/IMPA Standards) to meet World Market demands and achieve International Standards welfare."
   }
 }

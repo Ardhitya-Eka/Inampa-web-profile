@@ -47,6 +47,7 @@ const Home = () => {
       </div>
       <GetConnected />
       {/* FOOTER Slogan */}
+
       <div className="mt-1">
         <div className="flex justify-center">
           <h3 className="text-3xl font-bold text-slate-500 dark:text-white mb-8 text-center">

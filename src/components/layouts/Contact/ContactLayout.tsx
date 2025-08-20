@@ -33,12 +33,12 @@ export default function GetConnected() {
           <div>
             <p className="text-lg font-semibold text-gray-700">WhatsApp</p>
             <a
-              href="https://wa.me/081282620212"
+              href="https://wa.me/+6281398347370"
               target="_blank"
               rel="noopener noreferrer"
               className="text-green-600 hover:underline"
             >
-              081282620212
+              0813 9834 7370
             </a>
           </div>
         </div>

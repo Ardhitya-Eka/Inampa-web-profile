@@ -18,15 +18,6 @@
     "paragraph4": "Perwira Pandu Maritim telah berkontribusi besar dalam Keselamatan Maritim Indonesia bagi Kapal Niaga dan Non Niaga yang masuk/keluar pelabuhan di Indonesia termasuk di perairan lainnya yang membutuhkan jasa berlayar secara safe, secure, dan efisien serta efektif, dan kegiatan ini berkaitan erat dengan daya saing Indonesia di Sektor Kemaritiman dan turun aktifikitasnya.",
     "paragraph5": "Sejak tahun 2017 s/d saat ini INAMPA telah menjadi anggota International Maritime Pilots’ Association (IMPA), dimana IMPA menjadi mitra strategis IMO (International Maritime Organization) Badan PBB yang mengurusi Keselamatan Maritim Dunia dengan anggota ± 185 Negara."
   },
-  "Photo": {
-    "titleGallery": "Galeri INAMPA",
-    "descriptionPhoto1": "Penyerahan Cenderamata antara Asisten Operasi Kepala Staf Angkatan Laut (Asops Kasal) Bapak Laksamana Muda TNI Dadi Hartanto, M.Tr.(Han), dan Presiden INAMPA Bapak Pasoroan Herman Harianja dalam Acara Ceremonial Penandatanganan Nota Kesepahaman (MoU) antara Tentara Nasional Indonesia yang diwakili oleh TNI-AL, pada tanggal 02 November 2021.",
-    "descriptionPhoto2": "KEPALA BADAN KEAMANAN LAUT (BAKAMLA)- RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI RABU, 04 NOVEMBER 2020 DI MABES BAKAMLA - RI, MENTENG -JAKARTA PUSAT.",
-    "descriptionPhoto3": "PRESIDENT INAMPA BERSAMA STAF MENGADAKAN COURTESSY CALL/KOLABORASI DENGAN DIREKTUR BALAI BESAR PENDIDIKAN PENYEGARAN & PENINGKATAN ILMU PELAYARAN (BP3IP)- KEMENHUB. DI SUNTER -JAKARTA, RABU 16 DESEMBER 2020.",
-    "descriptionPhoto4": "PRESIDENT INAMPA & STAF MELAKUKAN COURTESY CALL DENGAN DIREKTUR UTAMA PT. SAMUDERA INDONESIA BAPAK BANI MAULANA MULIA SELASA, 13 APRIL 2021 DI JAKARTA",
-    "descriptionPhoto5": "KEPALA STAF TNI-AL LAKSAMANATNI YUDO MARGONO, S.E., MM MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI SELASA,03 NOVEMBER 2020 DI MABESTNI -AL CILANGKAP-JAKARTA TIMUR.",
-    "descriptionPhoto6": "KEPALA BADAN KEAMANAN LAUT (BAKAMLA)- RI LAKSDYATNI AAN KURNIA, S.Sos., M.M. MENERIMA COURTESY CALL PRESIDENT, PENGURUS DPP & DPW INAMPA PADA HARI RABU, 04 NOVEMBER 2020 DI MABES BAKAMLA - RI, MENTENG -JAKARTA PUSAT"
-  },
   "visi": {
     "title": "Visi",
     "text": "Bekerja sama untuk melakukan sesuatu yang lebih baik."
@@ -42,5 +33,28 @@
   "moto": {
     "title": "Moto",
     "text": "Mewujudkan Asosiasi menjadi organisasi yang berkembang dan berkualitas."
+  },
+  "ProgramJangkaPendek": {
+    "title": "Program Jangka Pendek",
+    "paragraph1": "1. Mendaftarkan Anggota dari Pelabuhan Indonesia, Wilayah I, II, III, IV, V dan INAMPA khusus wilayah Batam dan ASEAN.",
+    "paragraph2": "2. Sosialisasi semua Program Kerja INAMPA.",
+    "paragraph3": "3. Mendirikan Sekretariat dan kegiatannya.",
+    "paragraph4": "4. Mendaftarkan INAMPA ke International Maritime Pilot Association (IMPA) di London - Inggris, sesuai jadwalnya.",
+    "paragraph5": "5. Mendorong untuk percepatan Pemanduan Selat Malaka, ALKI-I dan ALKI-II.",
+    "paragraph6": "6. Revisi Peraturan Menteri Perhubungan Nomor PM 57 Tahun 2015 tentang Pemanduan Kapal."
+  },
+  "ProgramJangkaMenengah": {
+    "title": "Program Jangka Menengah (3 Tahun)",
+    "paragraph1": "1. Mengevaluasi kemajuan Program Kerja Jangka Pendek dan menindaklanjutinya.",
+    "paragraph2": "2. Mendorong Lembaga Pendidikan Pemanduan di Indonesia harus sesuai dengan Standar Internasional yaitu (IMO & IMPA).",
+    "paragraph3": "3. Meningkatkan Kualitas Profesionalisme bagi seluruh anggotanya.",
+    "paragraph4": "4. Mempromosikan INAMPA dan menyebarkan anggotanya untuk bekerja dengan kesejahteraan lebih baik dengan menganalisa pendapatan standar minimal dari anggotanya.",
+    "paragraph5": "5. Mengupayakan pekerjaan lain yang sesuai untuk seluruh anggotanya.",
+    "paragraph6": "6. Memberi saran tentang keselamatan maritim bersama dengan instansi terkait yang berhubungan dengan peraturan keselamatan bagi para pandu yang bertugas sesuai dengan rekomendasi dari IMPA.",
+    "paragraph7": "7. Mewajibkan kepada seluruh perusahaan / lembaga untuk mengasuransikan para pandu karena mereka bekerja dengan resiko tinggi bagi seluruh anggota INAMPA."
+  },
+  "ProgramJangkaPanjang": {
+    "title": "Program Jangka Panjang (5 Tahun)",
+    "paragraph1": "Mendorong anggota INAMPA untuk memperoleh kualifikasi Standar Internasional (Standar IMO / IMPA) untuk memenuhi Pasar Dunia dan mempunyai kesejahteraan Standar Internasional."
   }
 }

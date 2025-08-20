@@ -8,6 +8,9 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/../../public/Logo Inampa.png";
 import TogleLanguage from "@/components/ui/button/TogleLanguage";
 import { useTranslations } from "next-intl";
+
+import { useRouter } from "next/router";
+import { FiSettings } from "react-icons/fi";
 const Navbar = () => {
   const pdfUrl = "/pdf/Inampa.pdf";
   const pdfName = "Download pdf";
@@ -23,6 +26,11 @@ const Navbar = () => {
   }, []);
 
   const t = useTranslations("Navbar");
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/admin");
+  };
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 bg-white/20 backdrop-blur-md shadow-sm  ${
@@ -107,6 +115,12 @@ const Navbar = () => {
           </div>
 
           <TogleLanguage />
+          <button
+            onClick={handleClick}
+            className="flex items-center space-x-2 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded transition cursor-pointer"
+          >
+            <FiSettings className="w-5 h-5" />
+          </button>
         </nav>
         <div className="md:hidden">
           <TogleLanguage />

@@ -1,110 +1,86 @@
-// components/ModalCarousel.tsx
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ModalCarouselProps {
   isOpen: boolean;
-  onClose: () => void;
-  images: { title: string; description: string; imageUrl: string }[];
+  images: { url: string; title: string; description: string }[];
   currentIndex: number;
-  setCurrentIndex: (index: number) => void;
+  onClose: () => void;
 }
 
 export default function ModalCarousel({
-  isOpen,
-  onClose,
   images,
+  isOpen,
   currentIndex,
-  setCurrentIndex,
+  onClose,
 }: ModalCarouselProps) {
-  const prevSlide = () => {
-    setCurrentIndex((currentIndex - 1 + images.length) % images.length);
+  const [index, setIndex] = useState(currentIndex);
+
+  useEffect(() => {
+    setIndex(currentIndex);
+  }, [currentIndex]);
+
+  if (!isOpen) return null;
+
+  const prevImage = () => {
+    setIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
-  const nextSlide = () => {
-    setCurrentIndex((currentIndex + 1) % images.length);
+  const nextImage = () => {
+    setIndex((prev) => (prev + 1) % images.length);
   };
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        onClose={onClose}
-        className="fixed inset-0 z-50 flex items-center justify-center"
-      >
-        {/* ✅ Blurred backdrop */}
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm"
-          aria-hidden="true"
-        />
-
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+      <div className="relative w-full max-w-3xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-4">
+        {/* Tombol close */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 z-50 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
         >
-          <Dialog.Panel className="relative bg-white dark:bg-gray-900 rounded-lg p-4 max-w-3xl w-full overflow-hidden">
-            <button
-              onClick={onClose}
-              className="absolute top-3 right-3 text-gray-500 hover:text-red-500"
-            >
-              <XMarkIcon className="w-6 h-6" />
-            </button>
+          <X className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+        </button>
 
-            {/* ✅ Image carousel with smooth transform */}
-            <div className="relative h-[400px] overflow-hidden">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-              >
-                {images.map((image, idx) => (
-                  <div key={idx} className="relative min-w-full h-[400px]">
-                    <Image
-                      src={image.imageUrl}
-                      alt={image.title}
-                      fill
-                      className="object-cover rounded"
-                    />
-                  </div>
-                ))}
-              </div>
+        {/* Gambar */}
+        <div className="flex items-center justify-center relative">
+          <button
+            onClick={prevImage}
+            className="absolute left-2 z-40 p-2 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-800 dark:text-gray-200" />
+          </button>
 
-              {/* Arrows */}
-              <button
-                onClick={prevSlide}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 p-2 rounded-full shadow"
-              >
-                <ChevronLeftIcon className="h-5 w-5" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 p-2 rounded-full shadow"
-              >
-                <ChevronRightIcon className="h-5 w-5" />
-              </button>
-            </div>
+          <div className="relative w-[500px] h-[350px]">
+            <Image
+              src={images[index].url}
+              alt={images[index].title}
+              fill
+              className="object-contain rounded-lg"
+              priority
+            />
+          </div>
 
-            {/* Caption */}
-            <div className="mt-4 text-center">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {images[currentIndex].title}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                {images[currentIndex].description}
-              </p>
-            </div>
-          </Dialog.Panel>
-        </Transition.Child>
-      </Dialog>
-    </Transition>
+          <button
+            onClick={nextImage}
+            className="absolute right-2 z-40 p-2 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-800 dark:text-gray-200" />
+          </button>
+        </div>
+
+        {/* Caption */}
+        <div className="mt-4 text-center">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {images[index].title}
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            {images[index].description}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
