@@ -31,12 +31,9 @@ function withAuth<P extends object>(Component: React.ComponentType<P>) {
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const allowUid: string = JSON.parse(
-      process.env.NEXT_PUBLIC_ADMIN_UID || "[]"
-    );
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
-        if (user && allowUid.includes(user.uid)) {
+        if (user && user.uid === process.env.NEXT_PUBLIC_ADMIN_UID) {
           setIsAuthenticated(true);
         } else {
           router.push("/login");
@@ -44,7 +41,7 @@ function withAuth<P extends object>(Component: React.ComponentType<P>) {
         setLoading(false);
       });
       return () => unsubscribe();
-    }, [router, allowUid]);
+    }, [router]);
 
     if (loading) return <p>Loading...</p>;
     if (!isAuthenticated) return null;

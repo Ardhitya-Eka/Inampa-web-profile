@@ -9,12 +9,9 @@ export function withAuth<P extends object>(WrappedComponent: ComponentType<P>) {
     const [loading, setLoading] = useState(true);
     const [authorized, setAuthorized] = useState(false);
 
-    const allowUid: string[] = JSON.parse(
-      process.env.NEXT_PUBLIC_ADMIN_UID || "[]"
-    );
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
-        if (user && allowUid.includes(user.uid)) {
+        if (user && user.uid === process.env.NEXT_PUBLIC_ADMIN_UID) {
           setAuthorized(true);
         } else {
           router.push("/login");
@@ -22,7 +19,7 @@ export function withAuth<P extends object>(WrappedComponent: ComponentType<P>) {
         setLoading(false);
       });
       return () => unsubscribe();
-    }, [router, allowUid]);
+    }, [router]);
 
     if (loading) {
       return <p>Loading...</p>;
