@@ -19,7 +19,7 @@ const CardLayout = () => {
   const [photos, setPhotos] = useState<AlbumPhoto[]>([]);
   const { locale } = useRouter(); // <-- ambil locale aktif (id / en)
   const db = getFirestore(firebaseApp);
-  const t = useTranslations("Photo");
+  const t = useTranslations("titleGaleri");
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -45,7 +45,7 @@ const CardLayout = () => {
     <div id="photo" className=" pt-16">
       <div className="flex justify-center pt-5">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-          {t("titleGallery")}
+          {t("title")}
         </h2>
       </div>
       <div>
