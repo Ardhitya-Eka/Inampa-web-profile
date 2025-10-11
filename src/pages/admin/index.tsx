@@ -63,6 +63,8 @@ function FormDeskripsi() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [editPreviewUrl, setEditPreviewUrl] = useState<string | null>(null);
   const [album, setAlbum] = useState<AlbumPhoto[]>([]);
   const [albumId] = useState("default");
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,6 +84,18 @@ function FormDeskripsi() {
     });
     return () => unsub();
   }, [albumId, db]);
+
+  // Cleanup preview URLs when component unmounts or preview changes
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+      if (editPreviewUrl) {
+        URL.revokeObjectURL(editPreviewUrl);
+      }
+    };
+  }, [previewUrl, editPreviewUrl]);
 
   // Open edit modal with pre-populated data
   const handleEditPhoto = (photo: AlbumPhoto) => {
@@ -104,6 +118,7 @@ function FormDeskripsi() {
     setDescriptionId("");
     setDescriptionEn("");
     setTags("");
+    setEditPreviewUrl(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -158,6 +173,7 @@ function FormDeskripsi() {
     setDescriptionId("");
     setDescriptionEn("");
     setTags("");
+    setPreviewUrl(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -171,8 +187,37 @@ function FormDeskripsi() {
     setDescriptionId("");
     setDescriptionEn("");
     setTags("");
+    setPreviewUrl(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+    }
+  };
+
+  // Handle file selection with preview
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0] || null;
+    setFile(selectedFile);
+    
+    if (selectedFile) {
+      // Create preview URL
+      const url = URL.createObjectURL(selectedFile);
+      setPreviewUrl(url);
+    } else {
+      setPreviewUrl(null);
+    }
+  };
+
+  // Handle file selection for edit modal with preview
+  const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0] || null;
+    setFile(selectedFile);
+    
+    if (selectedFile) {
+      // Create preview URL
+      const url = URL.createObjectURL(selectedFile);
+      setEditPreviewUrl(url);
+    } else {
+      setEditPreviewUrl(null);
     }
   };
 
@@ -706,6 +751,25 @@ function FormDeskripsi() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Replace Photo (Optional)
                 </label>
+                
+                {/* New Image Preview */}
+                {editPreviewUrl && (
+                  <div className="mb-4 text-center">
+                    <div className="inline-block relative">
+                      <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 max-w-xs">
+                        <Image
+                          width={300}
+                          height={300}
+                          src={editPreviewUrl}
+                          alt="New Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-600 mt-2">New Image Preview</p>
+                  </div>
+                )}
+                
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
                   <div className="space-y-1 text-center">
                     <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
@@ -713,14 +777,14 @@ function FormDeskripsi() {
                     </svg>
                     <div className="flex text-sm text-gray-600">
                       <label htmlFor="edit-file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                        <span>Upload new file</span>
+                        <span>{editPreviewUrl ? "Change file" : "Upload new file"}</span>
                         <input
                           id="edit-file-upload"
                           name="edit-file-upload"
                           type="file"
                           className="sr-only"
                           ref={fileInputRef}
-                          onChange={(e) => setFile(e.target.files?.[0] || null)}
+                          onChange={handleEditFileChange}
                           accept="image/*"
                         />
                       </label>
@@ -843,6 +907,25 @@ function FormDeskripsi() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Photo File
               </label>
+              
+              {/* Image Preview */}
+              {previewUrl && (
+                <div className="mb-4 text-center">
+                  <div className="inline-block relative">
+                    <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 max-w-xs">
+                      <Image
+                        width={300}
+                        height={300}
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">Image Preview</p>
+                </div>
+              )}
+              
               <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
                 <div className="space-y-1 text-center">
                   <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
@@ -850,14 +933,14 @@ function FormDeskripsi() {
                   </svg>
                   <div className="flex text-sm text-gray-600">
                     <label htmlFor="upload-file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                      <span>Upload a file</span>
+                      <span>{previewUrl ? "Change file" : "Upload a file"}</span>
                       <input
                         id="upload-file-upload"
                         name="upload-file-upload"
                         type="file"
                         className="sr-only"
                         ref={fileInputRef}
-                        onChange={(e) => setFile(e.target.files?.[0] || null)}
+                        onChange={handleFileChange}
                         accept="image/*"
                       />
                     </label>
