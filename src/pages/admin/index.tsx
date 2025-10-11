@@ -65,6 +65,15 @@ function FormDeskripsi() {
   const [searchTerm, setSearchTerm] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [editPreviewUrl, setEditPreviewUrl] = useState<string | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showFinalConfirm, setShowFinalConfirm] = useState(false);
+  const [photoToDelete, setPhotoToDelete] = useState<string | null>(null);
+  const [notification, setNotification] = useState<{
+    type: 'success' | 'error';
+    message: string;
+    show: boolean;
+  }>({ type: 'success', message: '', show: false });
+  const [isLoading, setIsLoading] = useState(false);
   const [album, setAlbum] = useState<AlbumPhoto[]>([]);
   const [albumId] = useState("default");
   const [currentPage, setCurrentPage] = useState(1);
@@ -174,6 +183,7 @@ function FormDeskripsi() {
     setDescriptionEn("");
     setTags("");
     setPreviewUrl(null);
+    setIsLoading(false); // Reset loading state when opening modal
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -188,6 +198,7 @@ function FormDeskripsi() {
     setDescriptionEn("");
     setTags("");
     setPreviewUrl(null);
+    setIsLoading(false); // Reset loading state when closing modal
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -221,20 +232,126 @@ function FormDeskripsi() {
     }
   };
 
+  // Handle delete confirmation
+  const handleDeleteClick = (public_id: string) => {
+    setPhotoToDelete(public_id);
+    setShowDeleteConfirm(true);
+  };
+
+  // Show final confirmation
+  const handleConfirmDelete = () => {
+    setShowDeleteConfirm(false);
+    setShowFinalConfirm(true);
+  };
+
+  // Actually delete the photo
+  const handleFinalDelete = async () => {
+    if (!photoToDelete) return;
+    
+    setIsLoading(true);
+    try {
+      const token = await getToken();
+      await fetch("/api/cloudinary", {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ public_id: photoToDelete }),
+      });
+
+      const albumRef = doc(db, "albums", albumId);
+      await updateDoc(albumRef, {
+        photos: album.filter((p) => p.public_id !== photoToDelete),
+      });
+      
+      // Show success notification
+      showNotification('success', 'Photo deleted successfully!');
+      
+      // Reset to first page if current page would be empty
+      if (currentPage > Math.ceil((album.length - 1) / photosPerPage)) {
+        setCurrentPage(1);
+      }
+    } catch (error) {
+      console.error("Error deleting photo:", error);
+      showNotification('error', 'Failed to delete photo');
+    } finally {
+      setIsLoading(false);
+      setShowFinalConfirm(false);
+      setPhotoToDelete(null);
+    }
+  };
+
+  // Cancel delete (first step)
+  const handleCancelDelete = () => {
+    setShowDeleteConfirm(false);
+    setPhotoToDelete(null);
+  };
+
+  // Cancel final confirmation
+  const handleCancelFinalDelete = () => {
+    setShowFinalConfirm(false);
+    setPhotoToDelete(null);
+  };
+
+  // Show notification
+  const showNotification = (type: 'success' | 'error', message: string) => {
+    setNotification({ type, message, show: true });
+    setTimeout(() => {
+      setNotification(prev => ({ ...prev, show: false }));
+    }, 4000); // Auto-hide after 4 seconds
+  };
+
+  // Hide notification
+  const hideNotification = () => {
+    setNotification(prev => ({ ...prev, show: false }));
+  };
+
   // Upload atau Update Foto
   const handleUploadOrUpdate = async () => {
     if (!file && !updateTarget) return; // Require file for new uploads
+    
+    setIsLoading(true);
+    try {
     const token = await getToken();
 
-    const albumRef = doc(db, "albums", albumId);
-    const albumSnap = await getDoc(albumRef);
+      const albumRef = doc(db, "albums", albumId);
+      const albumSnap = await getDoc(albumRef);
 
-    let newPhoto: AlbumPhoto;
+      let newPhoto: AlbumPhoto;
 
-    if (updateTarget && !file) {
-      // Update metadata only (no new file)
-      newPhoto = {
-        ...editingPhoto!,
+      if (updateTarget && !file) {
+        // Update metadata only (no new file)
+        newPhoto = {
+          ...editingPhoto!,
+          title,
+          description_id: descriptionID,
+          description_en: descriptionEN,
+          tags: tags
+            .split(",")
+            .map((t) => t.trim())
+            .filter((t) => t !== ""),
+        };
+      } else if (file) {
+        // Upload new file (for new uploads or file updates)
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+        
+        return new Promise<void>((resolve, reject) => {
+    reader.onloadend = async () => {
+            try {
+      const res = await fetch("/api/cloudinary", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ file: reader.result, folder: "albums" }),
+      });
+      const data = await res.json();
+
+              newPhoto = {
+        url: data.secure_url,
+        public_id: data.public_id,
         title,
         description_id: descriptionID,
         description_en: descriptionEN,
@@ -242,51 +359,30 @@ function FormDeskripsi() {
           .split(",")
           .map((t) => t.trim())
           .filter((t) => t !== ""),
+        uploadedBy: auth.currentUser?.uid || "unknown",
+        uploadedAt: Date.now(),
       };
-    } else if (file) {
-      // Upload new file (for new uploads or file updates)
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      
-      return new Promise<void>((resolve, reject) => {
-        reader.onloadend = async () => {
-          try {
-            const res = await fetch("/api/cloudinary", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({ file: reader.result, folder: "albums" }),
-            });
-            const data = await res.json();
 
-            newPhoto = {
-              url: data.secure_url,
-              public_id: data.public_id,
-              title,
-              description_id: descriptionID,
-              description_en: descriptionEN,
-              tags: tags
-                .split(",")
-                .map((t) => t.trim())
-                .filter((t) => t !== ""),
-              uploadedBy: auth.currentUser?.uid || "unknown",
-              uploadedAt: Date.now(),
-            };
+              await processPhotoUpdate(newPhoto, albumRef, albumSnap, token);
+              resolve();
+            } catch (error) {
+              console.error('File upload error:', error);
+              showNotification('error', 'Failed to upload file');
+              reject(error);
+            }
+          };
+        });
+      } else {
+        return;
+      }
 
-            await processPhotoUpdate(newPhoto, albumRef, albumSnap, token);
-            resolve();
-          } catch (error) {
-            reject(error);
-          }
-        };
-      });
-    } else {
-      return;
+      await processPhotoUpdate(newPhoto, albumRef, albumSnap, token);
+    } catch (error) {
+      console.error('Upload/Update error:', error);
+      showNotification('error', updateTarget ? 'Failed to update photo' : 'Failed to upload photo');
+    } finally {
+      setIsLoading(false);
     }
-
-    await processPhotoUpdate(newPhoto, albumRef, albumSnap, token);
   };
 
   // Process photo update (common logic for both cases)
@@ -296,19 +392,20 @@ function FormDeskripsi() {
     albumSnap: any,
     token: string
   ) => {
-    let updatedPhotos: AlbumPhoto[];
-    
-    if (albumSnap.exists()) {
-      if (updateTarget) {
-        // Replace existing photo
-        updatedPhotos = albumSnap
-          .data()
-          .photos.map((p: AlbumPhoto) =>
-            p.public_id === updateTarget ? newPhoto : p
-          );
+    try {
+      let updatedPhotos: AlbumPhoto[];
+      
+      if (albumSnap.exists()) {
+        if (updateTarget) {
+          // Replace existing photo
+          updatedPhotos = albumSnap
+            .data()
+            .photos.map((p: AlbumPhoto) =>
+              p.public_id === updateTarget ? newPhoto : p
+            );
 
-        // Delete old image from Cloudinary if we uploaded a new one
-        if (file && editingPhoto) {
+          // Delete old image from Cloudinary if we uploaded a new one
+          if (file && editingPhoto) {
           await fetch("/api/cloudinary", {
             method: "DELETE",
             headers: {
@@ -317,47 +414,37 @@ function FormDeskripsi() {
             },
             body: JSON.stringify({ public_id: updateTarget }),
           });
+          }
+        } else {
+          // Add new photo
+          updatedPhotos = [...albumSnap.data().photos, newPhoto];
         }
+        await updateDoc(albumRef, { photos: updatedPhotos });
       } else {
-        // Add new photo
-        updatedPhotos = [...albumSnap.data().photos, newPhoto];
+        await setDoc(albumRef, { photos: [newPhoto] });
       }
-      await updateDoc(albumRef, { photos: updatedPhotos });
-    } else {
-      await setDoc(albumRef, { photos: [newPhoto] });
-    }
 
-    // Reset form and close modal
-    if (updateTarget) {
-      handleCloseEditModal();
-    } else {
-      handleCloseUploadModal();
-    }
-    
-    // Reset to first page if current page would be empty
-    if (currentPage > Math.ceil((album.length - 1) / photosPerPage)) {
-      setCurrentPage(1);
-    }
-  };
-  const handleDelete = async (public_id: string) => {
-    const token = await getToken();
-    await fetch("/api/cloudinary", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ public_id }),
-    });
+      // Show success notification
+      if (updateTarget) {
+        showNotification('success', 'Photo updated successfully!');
+      } else {
+        showNotification('success', 'New photo uploaded successfully!');
+      }
 
-    const albumRef = doc(db, "albums", albumId);
-    await updateDoc(albumRef, {
-      photos: album.filter((p) => p.public_id !== public_id),
-    });
-    
-    // Reset to first page if current page would be empty
-    if (currentPage > Math.ceil((album.length - 1) / photosPerPage)) {
-      setCurrentPage(1);
+      // Reset form and close modal
+      if (updateTarget) {
+        handleCloseEditModal();
+      } else {
+        handleCloseUploadModal();
+      }
+      
+      // Reset to first page if current page would be empty
+      if (currentPage > Math.ceil((album.length - 1) / photosPerPage)) {
+        setCurrentPage(1);
+      }
+    } catch (error) {
+      console.error('Process photo update error:', error);
+      showNotification('error', updateTarget ? 'Failed to update photo' : 'Failed to upload photo');
     }
   };
 
@@ -377,10 +464,10 @@ function FormDeskripsi() {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <div>
+              <div>
               <h1 className="text-3xl font-bold text-gray-900">Gallery Admin</h1>
               <p className="text-sm text-gray-600 mt-1">Manage INAMPA photo gallery</p>
-            </div>
+              </div>
             <div className="flex space-x-3">
               <button
                 onClick={() => (window.location.href = "/")}
@@ -404,6 +491,52 @@ function FormDeskripsi() {
           </div>
         </div>
       </div>
+
+      {/* Notification */}
+      {notification.show && (
+        <div className="fixed top-6 right-6 z-50">
+          <div className={`w-96 shadow-xl rounded-lg pointer-events-auto ${
+            notification.type === 'success' 
+              ? 'bg-green-50 border border-green-200' 
+              : 'bg-red-50 border border-red-200'
+          }`}>
+            <div className="p-6">
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  {notification.type === 'success' ? (
+                    <svg className="h-6 w-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ) : (
+                    <svg className="h-6 w-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                  )}
+                </div>
+                <div className="ml-4 w-0 flex-1">
+                  <p className={`text-base font-medium ${
+                    notification.type === 'success' ? 'text-green-800' : 'text-red-800'
+                  }`}>
+                    {notification.message}
+                  </p>
+                </div>
+                <div className="ml-4 flex-shrink-0 flex">
+                  <button
+                    onClick={hideNotification}
+                    className={`inline-flex text-gray-400 hover:text-gray-600 focus:outline-none ${
+                      notification.type === 'success' ? 'hover:text-green-600' : 'hover:text-red-600'
+                    }`}
+                  >
+                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Upload Button and Search */}
@@ -461,7 +594,7 @@ function FormDeskripsi() {
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">Gallery Photos</h2>
-                <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
                   {searchTerm ? (
                     <>
                       {filteredPhotos.length} of {album.length} photo{album.length !== 1 ? 's' : ''} found
@@ -588,7 +721,7 @@ function FormDeskripsi() {
                         </svg>
                       </button>
                       <button
-                        onClick={() => handleDelete(photo.public_id)}
+                        onClick={() => handleDeleteClick(photo.public_id)}
                         className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-200"
                         title="Delete photo"
                       >
@@ -729,7 +862,7 @@ function FormDeskripsi() {
             </div>
 
             {/* Modal Content */}
-            <div className="p-6 space-y-6">
+          <div className="p-6 space-y-6">
               {/* Current Photo Preview */}
               <div className="text-center">
                 <div className="inline-block">
@@ -747,10 +880,10 @@ function FormDeskripsi() {
               </div>
 
               {/* File Upload Section */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                   Replace Photo (Optional)
-                </label>
+              </label>
                 
                 {/* New Image Preview */}
                 {editPreviewUrl && (
@@ -770,104 +903,115 @@ function FormDeskripsi() {
                   </div>
                 )}
                 
-                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
-                  <div className="space-y-1 text-center">
-                    <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <div className="flex text-sm text-gray-600">
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
+                <div className="space-y-1 text-center">
+                  <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <div className="flex text-sm text-gray-600">
                       <label htmlFor="edit-file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                         <span>{editPreviewUrl ? "Change file" : "Upload new file"}</span>
-                        <input
+                      <input
                           id="edit-file-upload"
                           name="edit-file-upload"
-                          type="file"
-                          className="sr-only"
-                          ref={fileInputRef}
+                        type="file"
+                        className="sr-only"
+                        ref={fileInputRef}
                           onChange={handleEditFileChange}
-                          accept="image/*"
-                        />
-                      </label>
-                      <p className="pl-1">or drag and drop</p>
-                    </div>
-                    <p className="text-xs text-gray-500">Leave empty to keep current photo</p>
+                        accept="image/*"
+                      />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
                   </div>
+                    <p className="text-xs text-gray-500">Leave empty to keep current photo</p>
                 </div>
-              </div>
-
-              {/* Form Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Photo Title
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter photo title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Tags (comma separated)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="tag1, tag2, tag3"
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Description (Indonesian)
-                  </label>
-                  <textarea
-                    placeholder="Enter Indonesian description"
-                    value={descriptionID}
-                    onChange={(e) => setDescriptionId(e.target.value)}
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Description (English)
-                  </label>
-                  <textarea
-                    placeholder="Enter English description"
-                    value={descriptionEN}
-                    onChange={(e) => setDescriptionEn(e.target.value)}
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                  />
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-                <button
-                  onClick={handleCloseEditModal}
-                  className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleUploadOrUpdate}
-                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-                >
-                  Update Photo
-                </button>
               </div>
             </div>
+
+            {/* Form Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Photo Title
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter photo title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Tags (comma separated)
+                </label>
+                <input
+                  type="text"
+                    placeholder="tag1, tag2, tag3"
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+                />
+              </div>
+            </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description (Indonesian)
+              </label>
+              <textarea
+                    placeholder="Enter Indonesian description"
+                value={descriptionID}
+                onChange={(e) => setDescriptionId(e.target.value)}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description (English)
+              </label>
+              <textarea
+                    placeholder="Enter English description"
+                value={descriptionEN}
+                onChange={(e) => setDescriptionEn(e.target.value)}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+              />
+                </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+              <button
+                  onClick={handleCloseEditModal}
+                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+              >
+                  Cancel
+              </button>
+              <button
+                onClick={handleUploadOrUpdate}
+                  disabled={isLoading}
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"
+                >
+                  {isLoading ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Updating...
+                    </>
+                  ) : (
+                    'Update Photo'
+                  )}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     )}
@@ -897,8 +1041,8 @@ function FormDeskripsi() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
+                </div>
             </div>
-          </div>
 
           {/* Modal Content */}
           <div className="p-6 space-y-6">
@@ -920,7 +1064,7 @@ function FormDeskripsi() {
                         alt="Preview"
                         className="w-full h-full object-cover"
                       />
-                    </div>
+          </div>
                   </div>
                   <p className="text-sm text-gray-600 mt-2">Image Preview</p>
                 </div>
@@ -930,7 +1074,7 @@ function FormDeskripsi() {
                 <div className="space-y-1 text-center">
                   <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                </svg>
                   <div className="flex text-sm text-gray-600">
                     <label htmlFor="upload-file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                       <span>{previewUrl ? "Change file" : "Upload a file"}</span>
@@ -964,7 +1108,7 @@ function FormDeskripsi() {
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
                 />
-              </div>
+                </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -1010,26 +1154,192 @@ function FormDeskripsi() {
 
             {/* Action Buttons */}
             <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-              <button
+                          <button
                 onClick={handleCloseUploadModal}
+                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                          >
+                Cancel
+                          </button>
+                          <button
+                onClick={handleUploadOrUpdate}
+                disabled={!file || !title || isLoading}
+                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                    Uploading...
+                  </>
+                ) : (
+                  'Upload Photo'
+                )}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+      </div>
+    )}
+
+    {/* Delete Confirmation Modal */}
+    {showDeleteConfirm && (
+      <div 
+        className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+        onClick={handleCancelDelete}
+      >
+        <div 
+          className="bg-white rounded-lg shadow-xl max-w-md w-full"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Modal Header */}
+          <div className="px-6 py-4 border-b border-gray-200">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <svg className="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-lg font-medium text-gray-900">Delete Photo</h3>
+                <p className="text-sm text-gray-500">This action cannot be undone</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Modal Content */}
+          <div className="px-6 py-4">
+            <div className="text-sm text-gray-700">
+              <p className="mb-4">
+                Are you sure you want to delete this photo? This will permanently remove the image from both your gallery and cloud storage.
+              </p>
+              <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                        </div>
+                  <div className="ml-3">
+                    <h4 className="text-sm font-medium text-red-800">Warning</h4>
+                    <p className="text-sm text-red-700 mt-1">
+                      This action is permanent and cannot be recovered. The photo will be deleted from:
+                    </p>
+                    <ul className="text-sm text-red-700 mt-2 list-disc list-inside">
+                      <li>Your gallery</li>
+                      <li>Cloud storage</li>
+                      <li>All associated metadata</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+                        </div>
+                      </div>
+                      
+          {/* Modal Actions */}
+          <div className="px-6 py-4 bg-gray-50 rounded-b-lg">
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={handleCancelDelete}
                 className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
               >
                 Cancel
               </button>
               <button
-                onClick={handleUploadOrUpdate}
-                disabled={!file || !title}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                onClick={handleConfirmDelete}
+                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
               >
-                Upload Photo
+                Delete Photo
               </button>
             </div>
           </div>
+                          </div>
+                        </div>
+                      )}
+                      
+    {/* Final Delete Confirmation Modal */}
+    {showFinalConfirm && (
+      <div 
+        className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+        onClick={handleCancelFinalDelete}
+      >
+        <div 
+          className="bg-white rounded-lg shadow-xl max-w-md w-full"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Modal Header */}
+          <div className="px-6 py-4 border-b border-gray-200">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <svg className="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-lg font-medium text-gray-900">Final Confirmation</h3>
+                <p className="text-sm text-gray-500">Last chance to cancel</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Modal Content */}
+          <div className="px-6 py-4">
+            <div className="text-sm text-gray-700">
+              <p className="mb-4 font-medium">
+                Are you absolutely sure you want to delete this photo?
+              </p>
+              <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                      </div>
+                  <div className="ml-3">
+                    <h4 className="text-sm font-medium text-red-800">⚠️ Final Warning</h4>
+                    <p className="text-sm text-red-700 mt-1">
+                      This is your final confirmation. Once deleted, the photo will be permanently removed and cannot be recovered.
+                    </p>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Modal Actions */}
+          <div className="px-6 py-4 bg-gray-50 rounded-b-lg">
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={handleCancelFinalDelete}
+                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleFinalDelete}
+                disabled={isLoading}
+                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Deleting...
+                  </>
+                ) : (
+                  'Yes, Delete Forever'
+                )}
+              </button>
+          </div>
         </div>
       </div>
+      </div>
     )}
-  </div>
-);
+    </div>
+  );
 }
 
 export default withAuth(FormDeskripsi);
