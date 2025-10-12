@@ -5,7 +5,7 @@ import Image from "next/image";
 interface CardProps {
   description: string;
   url: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export default function Card({ description, url, onClick }: CardProps) {

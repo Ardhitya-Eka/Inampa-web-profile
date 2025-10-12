@@ -3,7 +3,10 @@
     "home": "Home",
     "about": "About",
     "Gallery": "Gallery",
-    "program": "Program",
+    "media": "Media",
+    "nasional": "National",
+    "internasional": "International",
+    "certificate": "Certificate",
     "contact": "Contact",
     "organization": "Organization"
   },

@@ -17,6 +17,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isMediaOpen, setIsMediaOpen] = useState<boolean>(false);
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -77,12 +78,65 @@ const Navbar = () => {
           <a href="#photo" className="hover:text-blue-600 transition">
             {t("Gallery")}
           </a>
+          {/* Media Dropwown pakai motion.div dan motion.a */}
+          <div>
+            <button
+              onClick={() => {
+                setIsMediaOpen(!isMediaOpen);
+                if (!isMediaOpen) setIsOpen(false); // Close  dropdown when opening another dropwdown
+              }}
+              className="flex items-center gap-1"
+            >
+              {t("media")}
+              {isMediaOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            </button>
+            <AnimatePresence>
+              {isMediaOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className={
+                    scrolled
+                      ? `absolute top-full w-48 overflow-hidden shadow-xl border-t border-gray-700 bg-white backdrop-blur-md rounded-md`
+                      : `absolute top-full w-48 overflow-hidden shadow-2xl border-t border-gray-700 bg-white/20 backdrop-blur-md rounded-md`
+                  }
+                >
+                  <motion.a
+                    href="/media/nasional"
+                    className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
+                  >
+                    {t("nasional")}
+                  </motion.a>
+                  <motion.a
+                    href="/media/internasional"
+                    className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
+                  >
+                    {t("internasional")}
+                  </motion.a>
+                  <motion.a
+                    href="/media/certificate"
+                    className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
+                  >
+                    {t("certificate")}
+                  </motion.a>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          {/* s Dropwown pakai motion.div dan motion.a */}
+          {/* Contact Link */}
+          
           <a href="#contact" className="hover:text-blue-600 transition">
             {t("contact")}
           </a>
           <div>
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsOpen(!isOpen);
+                if (!isOpen) setIsMediaOpen(false); // Close  dropdown when opening another dropdown
+              }}
               className="flex items-center gap-1"
             >
               {t("organization")}
@@ -163,6 +217,30 @@ const Navbar = () => {
             >
               {t("Gallery")}
             </a>
+            <div className="border-t border-gray-200 pt-2 mt-2">
+              <div className="text-sm font-medium text-gray-500 mb-2">{t("media")}</div>
+              <a
+                href="/media/nasional"
+                className="block py-1 pl-4 text-sm hover:text-blue-600"
+                onClick={() => setMenuOpen(false)}
+              >
+                {t("nasional")}
+              </a>
+              <a
+                href="/media/internasional"
+                className="block py-1 pl-4 text-sm hover:text-blue-600"
+                onClick={() => setMenuOpen(false)}
+              >
+                {t("internasional")}
+              </a>
+              <a
+                href="/media/certificate"
+                className="block py-1 pl-4 text-sm hover:text-blue-600"
+                onClick={() => setMenuOpen(false)}
+              >
+                {t("certificate")}
+              </a>
+            </div>
             <a
               href="#contact"
               className="hover:text-blue-600"

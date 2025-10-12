@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useTranslations } from "next-intl";
+import messagesId from "../../../../messages/id.json";
 
 const AboutLayout = () => {
   const [ref, inView] = useInView({
@@ -63,5 +64,13 @@ const AboutLayout = () => {
     </section>
   );
 };
+
+export async function getStaticProps() {
+  return {
+    props: {
+      messages: messagesId, // Default to Indonesian for static export
+    },
+  };
+}
 
 export default AboutLayout;

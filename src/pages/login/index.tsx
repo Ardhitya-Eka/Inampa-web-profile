@@ -37,16 +37,21 @@ export default function LoginPage() {
         setError("Akun ini tidak memiliki akses admin. Silakan gunakan akun admin yang benar.");
         await auth.signOut(); // Sign out unauthorized user
       }
-    } catch (error: any) {
+      } catch (error: unknown) {
       console.error("Login gagal:", error);
       
       // Handle specific error cases
-      if (error.code === "auth/popup-closed-by-user") {
-        setError("Login dibatalkan. Silakan coba lagi.");
-      } else if (error.code === "auth/popup-blocked") {
-        setError("Popup login diblokir. Silakan izinkan popup untuk situs ini.");
-      } else if (error.code === "auth/network-request-failed") {
-        setError("Koneksi internet bermasalah. Silakan periksa koneksi Anda.");
+      if (error && typeof error === 'object' && 'code' in error) {
+        const errorCode = (error as { code: string }).code;
+        if (errorCode === "auth/popup-closed-by-user") {
+          setError("Login dibatalkan. Silakan coba lagi.");
+        } else if (errorCode === "auth/popup-blocked") {
+          setError("Popup login diblokir. Silakan izinkan popup untuk situs ini.");
+        } else if (errorCode === "auth/network-request-failed") {
+          setError("Koneksi internet bermasalah. Silakan periksa koneksi Anda.");
+        } else {
+          setError("Login gagal. Silakan coba lagi atau hubungi administrator.");
+        }
       } else {
         setError("Login gagal. Silakan coba lagi atau hubungi administrator.");
       }

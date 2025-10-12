@@ -20,7 +20,7 @@ const firebaseConfig = {
 let app;
 try {
   app = getApp();
-} catch (error) {
+} catch {
   app = initializeApp(firebaseConfig);
 }
 

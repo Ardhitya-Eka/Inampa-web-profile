@@ -4,8 +4,9 @@ import {
   updateDoc,
   doc,
   getDoc,
-  getFirestore,
   setDoc,
+  DocumentReference,
+  DocumentSnapshot,
 } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
@@ -92,7 +93,7 @@ function FormDeskripsi() {
       else setAlbum([]);
     });
     return () => unsub();
-  }, [albumId, db]);
+  }, [albumId]);
 
   // Cleanup preview URLs when component unmounts or preview changes
   useEffect(() => {
@@ -388,8 +389,8 @@ function FormDeskripsi() {
   // Process photo update (common logic for both cases)
   const processPhotoUpdate = async (
     newPhoto: AlbumPhoto,
-    albumRef: any,
-    albumSnap: any,
+    albumRef: DocumentReference,
+    albumSnap: DocumentSnapshot,
     token: string
   ) => {
     try {

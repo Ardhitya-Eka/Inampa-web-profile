@@ -3,8 +3,8 @@ import ModalCarousel from "@/components/ui/Card/ModalCarousel";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getFirestore, doc, onSnapshot } from "firebase/firestore";
-import firebaseApp from "@/lib/firebase/init";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase/init";
 
 type AlbumPhoto = {
   url: string;
@@ -18,7 +18,6 @@ type AlbumPhoto = {
 const CardLayout = () => {
   const [photos, setPhotos] = useState<AlbumPhoto[]>([]);
   const { locale } = useRouter(); // <-- ambil locale aktif (id / en)
-  const db = getFirestore(firebaseApp);
   const t = useTranslations("titleGaleri");
 
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +35,7 @@ const CardLayout = () => {
     });
 
     return () => unsub();
-  }, [db]);
+  }, []);
   const openModal = (index: number) => {
     setCurrentIndex(index);
     setIsOpen(true);
