@@ -6,7 +6,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ModalCarouselProps {
   isOpen: boolean;
-  images: { url: string; title: string; description: string }[];
+  images: { url: string; title: string; description?: string }[];
   currentIndex: number;
   onClose: () => void;
 }
@@ -34,7 +34,7 @@ export default function ModalCarousel({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-sm p-4">
       <div className="relative w-full max-w-3xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-4">
         {/* Tombol close */}
         <button

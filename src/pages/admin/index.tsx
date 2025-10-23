@@ -70,10 +70,10 @@ function FormDeskripsi() {
   const [showFinalConfirm, setShowFinalConfirm] = useState(false);
   const [photoToDelete, setPhotoToDelete] = useState<string | null>(null);
   const [notification, setNotification] = useState<{
-    type: 'success' | 'error';
+    type: "success" | "error";
     message: string;
     show: boolean;
-  }>({ type: 'success', message: '', show: false });
+  }>({ type: "success", message: "", show: false });
   const [isLoading, setIsLoading] = useState(false);
   const [album, setAlbum] = useState<AlbumPhoto[]>([]);
   const [albumId] = useState("default");
@@ -135,13 +135,16 @@ function FormDeskripsi() {
   };
 
   // Search and pagination logic
-  const filteredPhotos = album.filter(photo => 
-    photo.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    photo.description_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    photo.description_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    photo.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredPhotos = album.filter(
+    (photo) =>
+      photo.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      photo.description_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      photo.description_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      photo.tags.some((tag) =>
+        tag.toLowerCase().includes(searchTerm.toLowerCase())
+      )
   );
-  
+
   const totalPages = Math.ceil(filteredPhotos.length / photosPerPage);
   const startIndex = (currentPage - 1) * photosPerPage;
   const endIndex = startIndex + photosPerPage;
@@ -151,9 +154,9 @@ function FormDeskripsi() {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     // Scroll to top of gallery section
-    const galleryElement = document.getElementById('gallery-section');
+    const galleryElement = document.getElementById("gallery-section");
     if (galleryElement) {
-      galleryElement.scrollIntoView({ behavior: 'smooth' });
+      galleryElement.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -162,9 +165,9 @@ function FormDeskripsi() {
     setPhotosPerPage(newPhotosPerPage);
     setCurrentPage(1); // Reset to first page
     // Scroll to top of gallery section
-    const galleryElement = document.getElementById('gallery-section');
+    const galleryElement = document.getElementById("gallery-section");
     if (galleryElement) {
-      galleryElement.scrollIntoView({ behavior: 'smooth' });
+      galleryElement.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -209,7 +212,7 @@ function FormDeskripsi() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
     setFile(selectedFile);
-    
+
     if (selectedFile) {
       // Create preview URL
       const url = URL.createObjectURL(selectedFile);
@@ -223,7 +226,7 @@ function FormDeskripsi() {
   const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
     setFile(selectedFile);
-    
+
     if (selectedFile) {
       // Create preview URL
       const url = URL.createObjectURL(selectedFile);
@@ -248,7 +251,7 @@ function FormDeskripsi() {
   // Actually delete the photo
   const handleFinalDelete = async () => {
     if (!photoToDelete) return;
-    
+
     setIsLoading(true);
     try {
       const token = await getToken();
@@ -264,17 +267,17 @@ function FormDeskripsi() {
       await updateDoc(albumRef, {
         photos: album.filter((p) => p.public_id !== photoToDelete),
       });
-      
+
       // Show success notification
-      showNotification('success', 'Photo deleted successfully!');
-      
+      showNotification("success", "Photo deleted successfully!");
+
       // Reset to first page if current page would be empty
       if (currentPage > Math.ceil((album.length - 1) / photosPerPage)) {
         setCurrentPage(1);
       }
     } catch (error) {
       console.error("Error deleting photo:", error);
-      showNotification('error', 'Failed to delete photo');
+      showNotification("error", "Failed to delete photo");
     } finally {
       setIsLoading(false);
       setShowFinalConfirm(false);
@@ -295,25 +298,25 @@ function FormDeskripsi() {
   };
 
   // Show notification
-  const showNotification = (type: 'success' | 'error', message: string) => {
+  const showNotification = (type: "success" | "error", message: string) => {
     setNotification({ type, message, show: true });
     setTimeout(() => {
-      setNotification(prev => ({ ...prev, show: false }));
+      setNotification((prev) => ({ ...prev, show: false }));
     }, 4000); // Auto-hide after 4 seconds
   };
 
   // Hide notification
   const hideNotification = () => {
-    setNotification(prev => ({ ...prev, show: false }));
+    setNotification((prev) => ({ ...prev, show: false }));
   };
 
   // Upload atau Update Foto
   const handleUploadOrUpdate = async () => {
     if (!file && !updateTarget) return; // Require file for new uploads
-    
+
     setIsLoading(true);
     try {
-    const token = await getToken();
+      const token = await getToken();
 
       const albumRef = doc(db, "albums", albumId);
       const albumSnap = await getDoc(albumRef);
@@ -334,41 +337,41 @@ function FormDeskripsi() {
         };
       } else if (file) {
         // Upload new file (for new uploads or file updates)
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-        
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
         return new Promise<void>((resolve, reject) => {
-    reader.onloadend = async () => {
+          reader.onloadend = async () => {
             try {
-      const res = await fetch("/api/cloudinary", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ file: reader.result, folder: "albums" }),
-      });
-      const data = await res.json();
+              const res = await fetch("/api/cloudinary", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ file: reader.result, folder: "albums" }),
+              });
+              const data = await res.json();
 
               newPhoto = {
-        url: data.secure_url,
-        public_id: data.public_id,
-        title,
-        description_id: descriptionID,
-        description_en: descriptionEN,
-        tags: tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter((t) => t !== ""),
-        uploadedBy: auth.currentUser?.uid || "unknown",
-        uploadedAt: Date.now(),
-      };
+                url: data.secure_url,
+                public_id: data.public_id,
+                title,
+                description_id: descriptionID,
+                description_en: descriptionEN,
+                tags: tags
+                  .split(",")
+                  .map((t) => t.trim())
+                  .filter((t) => t !== ""),
+                uploadedBy: auth.currentUser?.uid || "unknown",
+                uploadedAt: Date.now(),
+              };
 
               await processPhotoUpdate(newPhoto, albumRef, albumSnap, token);
               resolve();
             } catch (error) {
-              console.error('File upload error:', error);
-              showNotification('error', 'Failed to upload file');
+              console.error("File upload error:", error);
+              showNotification("error", "Failed to upload file");
               reject(error);
             }
           };
@@ -379,8 +382,11 @@ function FormDeskripsi() {
 
       await processPhotoUpdate(newPhoto, albumRef, albumSnap, token);
     } catch (error) {
-      console.error('Upload/Update error:', error);
-      showNotification('error', updateTarget ? 'Failed to update photo' : 'Failed to upload photo');
+      console.error("Upload/Update error:", error);
+      showNotification(
+        "error",
+        updateTarget ? "Failed to update photo" : "Failed to upload photo"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -395,7 +401,7 @@ function FormDeskripsi() {
   ) => {
     try {
       let updatedPhotos: AlbumPhoto[];
-      
+
       if (albumSnap.exists()) {
         if (updateTarget) {
           // Replace existing photo
@@ -407,14 +413,14 @@ function FormDeskripsi() {
 
           // Delete old image from Cloudinary if we uploaded a new one
           if (file && editingPhoto) {
-          await fetch("/api/cloudinary", {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ public_id: updateTarget }),
-          });
+            await fetch("/api/cloudinary", {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ public_id: updateTarget }),
+            });
           }
         } else {
           // Add new photo
@@ -427,9 +433,9 @@ function FormDeskripsi() {
 
       // Show success notification
       if (updateTarget) {
-        showNotification('success', 'Photo updated successfully!');
+        showNotification("success", "Photo updated successfully!");
       } else {
-        showNotification('success', 'New photo uploaded successfully!');
+        showNotification("success", "New photo uploaded successfully!");
       }
 
       // Reset form and close modal
@@ -438,14 +444,17 @@ function FormDeskripsi() {
       } else {
         handleCloseUploadModal();
       }
-      
+
       // Reset to first page if current page would be empty
       if (currentPage > Math.ceil((album.length - 1) / photosPerPage)) {
         setCurrentPage(1);
       }
     } catch (error) {
-      console.error('Process photo update error:', error);
-      showNotification('error', updateTarget ? 'Failed to update photo' : 'Failed to upload photo');
+      console.error("Process photo update error:", error);
+      showNotification(
+        "error",
+        updateTarget ? "Failed to update photo" : "Failed to upload photo"
+      );
     }
   };
 
@@ -465,17 +474,31 @@ function FormDeskripsi() {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-              <div>
-              <h1 className="text-3xl font-bold text-gray-900">Gallery Admin</h1>
-              <p className="text-sm text-gray-600 mt-1">Manage INAMPA photo gallery</p>
-              </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Gallery Admin
+              </h1>
+              <p className="text-sm text-gray-600 mt-1">
+                Manage INAMPA photo gallery
+              </p>
+            </div>
             <div className="flex space-x-3">
               <button
                 onClick={() => (window.location.href = "/")}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
               >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                <svg
+                  className="w-4 h-4 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  />
                 </svg>
                 Back to Home
               </button>
@@ -483,8 +506,18 @@ function FormDeskripsi() {
                 onClick={handleLogout}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
               >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                <svg
+                  className="w-4 h-4 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
                 </svg>
                 Logout
               </button>
@@ -496,28 +529,54 @@ function FormDeskripsi() {
       {/* Notification */}
       {notification.show && (
         <div className="fixed top-6 right-6 z-50">
-          <div className={`w-96 shadow-xl rounded-lg pointer-events-auto ${
-            notification.type === 'success' 
-              ? 'bg-green-50 border border-green-200' 
-              : 'bg-red-50 border border-red-200'
-          }`}>
+          <div
+            className={`w-96 shadow-xl rounded-lg pointer-events-auto ${
+              notification.type === "success"
+                ? "bg-green-50 border border-green-200"
+                : "bg-red-50 border border-red-200"
+            }`}
+          >
             <div className="p-6">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  {notification.type === 'success' ? (
-                    <svg className="h-6 w-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  {notification.type === "success" ? (
+                    <svg
+                      className="h-6 w-6 text-green-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                   ) : (
-                    <svg className="h-6 w-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    <svg
+                      className="h-6 w-6 text-red-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                      />
                     </svg>
                   )}
                 </div>
                 <div className="ml-4 w-0 flex-1">
-                  <p className={`text-base font-medium ${
-                    notification.type === 'success' ? 'text-green-800' : 'text-red-800'
-                  }`}>
+                  <p
+                    className={`text-base font-medium ${
+                      notification.type === "success"
+                        ? "text-green-800"
+                        : "text-red-800"
+                    }`}
+                  >
                     {notification.message}
                   </p>
                 </div>
@@ -525,11 +584,23 @@ function FormDeskripsi() {
                   <button
                     onClick={hideNotification}
                     className={`inline-flex text-gray-400 hover:text-gray-600 focus:outline-none ${
-                      notification.type === 'success' ? 'hover:text-green-600' : 'hover:text-red-600'
+                      notification.type === "success"
+                        ? "hover:text-green-600"
+                        : "hover:text-red-600"
                     }`}
                   >
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -543,27 +614,51 @@ function FormDeskripsi() {
         {/* Upload Button and Search */}
         <div className="bg-white rounded-lg shadow-sm border mb-8">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Gallery Management</h2>
-            <p className="text-sm text-gray-600 mt-1">Upload and manage your photos</p>
+            <h2 className="text-lg font-semibold text-gray-900">
+              Gallery Management
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Upload and manage your photos
+            </p>
           </div>
-          
+
           <div className="p-6">
             <div className="flex justify-between items-center">
               <button
                 onClick={handleOpenUploadModal}
                 className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 flex items-center space-x-2"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
                 </svg>
                 <span>Upload New Photo</span>
               </button>
-              
+
               <div className="flex items-center space-x-4">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    <svg
+                      className="h-5 w-5 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
                     </svg>
                   </div>
                   <input
@@ -579,8 +674,18 @@ function FormDeskripsi() {
                     onClick={() => handleSearch("")}
                     className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 )}
@@ -590,15 +695,21 @@ function FormDeskripsi() {
         </div>
 
         {/* Gallery Grid */}
-        <div id="gallery-section" className="bg-white rounded-lg shadow-sm border">
+        <div
+          id="gallery-section"
+          className="bg-white rounded-lg shadow-sm border"
+        >
           <div className="px-6 py-4 border-b border-gray-200">
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="text-lg font-semibold text-gray-900">Gallery Photos</h2>
-            <p className="text-sm text-gray-600 mt-1">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Gallery Photos
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">
                   {searchTerm ? (
                     <>
-                      {filteredPhotos.length} of {album.length} photo{album.length !== 1 ? 's' : ''} found
+                      {filteredPhotos.length} of {album.length} photo
+                      {album.length !== 1 ? "s" : ""} found
                       {totalPages > 1 && (
                         <span className="ml-2">
                           (Page {currentPage} of {totalPages})
@@ -607,7 +718,8 @@ function FormDeskripsi() {
                     </>
                   ) : (
                     <>
-                      {album.length} photo{album.length !== 1 ? 's' : ''} in gallery
+                      {album.length} photo{album.length !== 1 ? "s" : ""} in
+                      gallery
                       {totalPages > 1 && (
                         <span className="ml-2">
                           (Page {currentPage} of {totalPages})
@@ -620,17 +732,24 @@ function FormDeskripsi() {
               <div className="flex items-center space-x-4">
                 {totalPages > 1 && (
                   <div className="text-sm text-gray-500">
-                    Showing {startIndex + 1}-{Math.min(endIndex, filteredPhotos.length)} of {filteredPhotos.length}
+                    Showing {startIndex + 1}-
+                    {Math.min(endIndex, filteredPhotos.length)} of{" "}
+                    {filteredPhotos.length}
                   </div>
                 )}
                 <div className="flex items-center space-x-2">
-                  <label htmlFor="photos-per-page" className="text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="photos-per-page"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Photos per page:
                   </label>
                   <select
                     id="photos-per-page"
                     value={photosPerPage}
-                    onChange={(e) => handlePhotosPerPageChange(Number(e.target.value))}
+                    onChange={(e) =>
+                      handlePhotosPerPageChange(Number(e.target.value))
+                    }
                     className="rounded-md border-gray-300 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   >
                     <option value={5}>5</option>
@@ -644,18 +763,30 @@ function FormDeskripsi() {
               </div>
             </div>
           </div>
-          
+
           <div className="p-6">
             {filteredPhotos.length === 0 ? (
               <div className="text-center py-12">
-                <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <svg
+                  className="mx-auto h-12 w-12 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
                 </svg>
                 <h3 className="mt-2 text-sm font-medium text-gray-900">
                   {searchTerm ? "No photos found" : "No photos"}
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  {searchTerm ? "Try adjusting your search terms." : "Get started by uploading your first photo."}
+                  {searchTerm
+                    ? "Try adjusting your search terms."
+                    : "Get started by uploading your first photo."}
                 </p>
               </div>
             ) : (
@@ -675,22 +806,24 @@ function FormDeskripsi() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                       />
                     </div>
-                    
+
                     {/* Photo Info */}
                     <div className="p-4">
                       <h3 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-1">
                         {photo.title}
                       </h3>
-                      
+
                       <div className="space-y-2 text-xs text-gray-600">
                         <p className="line-clamp-2">
-                          <span className="font-medium">ID:</span> {photo.description_id}
+                          <span className="font-medium">ID:</span>{" "}
+                          {photo.description_id}
                         </p>
                         <p className="line-clamp-2">
-                          <span className="font-medium">EN:</span> {photo.description_en}
+                          <span className="font-medium">EN:</span>{" "}
+                          {photo.description_en}
                         </p>
                       </div>
-                      
+
                       {photo.tags.length > 0 && (
                         <div className="mt-3 flex flex-wrap gap-1">
                           {photo.tags.slice(0, 3).map((tag, index) => (
@@ -709,7 +842,7 @@ function FormDeskripsi() {
                         </div>
                       )}
                     </div>
-                    
+
                     {/* Action Buttons */}
                     <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                       <button
@@ -717,8 +850,18 @@ function FormDeskripsi() {
                         className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-colors duration-200"
                         title="Update photo"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                          />
                         </svg>
                       </button>
                       <button
@@ -726,8 +869,18 @@ function FormDeskripsi() {
                         className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-200"
                         title="Delete photo"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
                         </svg>
                       </button>
                     </div>
@@ -758,62 +911,92 @@ function FormDeskripsi() {
                 <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                   <div>
                     <p className="text-sm text-gray-700">
-                      Showing <span className="font-medium">{startIndex + 1}</span> to{' '}
-                      <span className="font-medium">{Math.min(endIndex, album.length)}</span> of{' '}
-                      <span className="font-medium">{album.length}</span> results
+                      Showing{" "}
+                      <span className="font-medium">{startIndex + 1}</span> to{" "}
+                      <span className="font-medium">
+                        {Math.min(endIndex, album.length)}
+                      </span>{" "}
+                      of <span className="font-medium">{album.length}</span>{" "}
+                      results
                     </p>
                   </div>
                   <div>
-                    <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                    <nav
+                      className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                      aria-label="Pagination"
+                    >
                       <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                         className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <span className="sr-only">Previous</span>
-                        <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd" />
+                        <svg
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </button>
-                      
-                      {/* Page numbers */}
-                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                        // Show first page, last page, current page, and pages around current page
-                        const showPage = page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1;
-                        
-                        if (!showPage) {
-                          // Show ellipsis for gaps
-                          if (page === 2 && currentPage > 4) {
-                            return (
-                              <span key={page} className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-                                ...
-                              </span>
-                            );
-                          }
-                          if (page === totalPages - 1 && currentPage < totalPages - 3) {
-                            return (
-                              <span key={page} className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-                                ...
-                              </span>
-                            );
-                          }
-                          return null;
-                        }
 
-                        return (
-                          <button
-                            key={page}
-                            onClick={() => handlePageChange(page)}
-                            className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
-                              page === currentPage
-                                ? 'z-10 bg-blue-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-                                : 'text-gray-900'
-                            }`}
-                          >
-                            {page}
-                          </button>
-                        );
-                      })}
+                      {/* Page numbers */}
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                        (page) => {
+                          // Show first page, last page, current page, and pages around current page
+                          const showPage =
+                            page === 1 ||
+                            page === totalPages ||
+                            Math.abs(page - currentPage) <= 1;
+
+                          if (!showPage) {
+                            // Show ellipsis for gaps
+                            if (page === 2 && currentPage > 4) {
+                              return (
+                                <span
+                                  key={page}
+                                  className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
+                                >
+                                  ...
+                                </span>
+                              );
+                            }
+                            if (
+                              page === totalPages - 1 &&
+                              currentPage < totalPages - 3
+                            ) {
+                              return (
+                                <span
+                                  key={page}
+                                  className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
+                                >
+                                  ...
+                                </span>
+                              );
+                            }
+                            return null;
+                          }
+
+                          return (
+                            <button
+                              key={page}
+                              onClick={() => handlePageChange(page)}
+                              className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
+                                page === currentPage
+                                  ? "z-10 bg-blue-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                  : "text-gray-900"
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          );
+                        }
+                      )}
 
                       <button
                         onClick={() => handlePageChange(currentPage + 1)}
@@ -821,8 +1004,17 @@ function FormDeskripsi() {
                         className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <span className="sr-only">Next</span>
-                        <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+                        <svg
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </button>
                     </nav>
@@ -836,11 +1028,11 @@ function FormDeskripsi() {
 
       {/* Edit Modal */}
       {showEditModal && editingPhoto && (
-        <div 
+        <div
           className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
           onClick={handleCloseEditModal}
         >
-          <div 
+          <div
             className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
@@ -848,22 +1040,36 @@ function FormDeskripsi() {
             <div className="px-6 py-4 border-b border-gray-200">
               <div className="flex justify-between items-center">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900">Edit Photo</h2>
-                  <p className="text-sm text-gray-600 mt-1">Update photo details and metadata</p>
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    Edit Photo
+                  </h2>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Update photo details and metadata
+                  </p>
                 </div>
                 <button
                   onClick={handleCloseEditModal}
                   className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
             </div>
 
             {/* Modal Content */}
-          <div className="p-6 space-y-6">
+            <div className="p-6 space-y-6">
               {/* Current Photo Preview */}
               <div className="text-center">
                 <div className="inline-block">
@@ -876,16 +1082,18 @@ function FormDeskripsi() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <p className="text-sm text-gray-600 mt-2 font-medium">Current Photo</p>
+                  <p className="text-sm text-gray-600 mt-2 font-medium">
+                    Current Photo
+                  </p>
                 </div>
               </div>
 
               {/* File Upload Section */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Replace Photo (Optional)
-              </label>
-                
+                </label>
+
                 {/* New Image Preview */}
                 {editPreviewUrl && (
                   <div className="mb-4 text-center">
@@ -900,445 +1108,594 @@ function FormDeskripsi() {
                         />
                       </div>
                     </div>
-                    <p className="text-sm text-gray-600 mt-2">New Image Preview</p>
+                    <p className="text-sm text-gray-600 mt-2">
+                      New Image Preview
+                    </p>
                   </div>
                 )}
-                
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
-                <div className="space-y-1 text-center">
-                  <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <div className="flex text-sm text-gray-600">
-                      <label htmlFor="edit-file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                        <span>{editPreviewUrl ? "Change file" : "Upload new file"}</span>
-                      <input
+
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
+                  <div className="space-y-1 text-center">
+                    <svg
+                      className="mx-auto h-12 w-12 text-gray-400"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                    >
+                      <path
+                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <div className="flex text-sm text-gray-600">
+                      <label
+                        htmlFor="edit-file-upload"
+                        className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
+                      >
+                        <span>
+                          {editPreviewUrl ? "Change file" : "Upload new file"}
+                        </span>
+                        <input
                           id="edit-file-upload"
                           name="edit-file-upload"
-                        type="file"
-                        className="sr-only"
-                        ref={fileInputRef}
+                          type="file"
+                          className="sr-only"
+                          ref={fileInputRef}
                           onChange={handleEditFileChange}
-                        accept="image/*"
-                      />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
+                          accept="image/*"
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      Leave empty to keep current photo
+                    </p>
                   </div>
-                    <p className="text-xs text-gray-500">Leave empty to keep current photo</p>
                 </div>
               </div>
-            </div>
 
-            {/* Form Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Photo Title
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter photo title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+              {/* Form Fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Photo Title
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter photo title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Tags (comma separated)
-                </label>
-                <input
-                  type="text"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tags (comma separated)
+                  </label>
+                  <input
+                    type="text"
                     placeholder="tag1, tag2, tag3"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                />
+                  />
+                </div>
               </div>
-            </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description (Indonesian)
-              </label>
-              <textarea
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Description (Indonesian)
+                  </label>
+                  <textarea
                     placeholder="Enter Indonesian description"
-                value={descriptionID}
-                onChange={(e) => setDescriptionId(e.target.value)}
+                    value={descriptionID}
+                    onChange={(e) => setDescriptionId(e.target.value)}
                     rows={4}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description (English)
-              </label>
-              <textarea
-                    placeholder="Enter English description"
-                value={descriptionEN}
-                onChange={(e) => setDescriptionEn(e.target.value)}
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-              />
+                  />
                 </div>
-            </div>
 
-            {/* Action Buttons */}
-            <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-              <button
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Description (English)
+                  </label>
+                  <textarea
+                    placeholder="Enter English description"
+                    value={descriptionEN}
+                    onChange={(e) => setDescriptionEn(e.target.value)}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                <button
                   onClick={handleCloseEditModal}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-              >
+                  className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                >
                   Cancel
-              </button>
-              <button
-                onClick={handleUploadOrUpdate}
+                </button>
+                <button
+                  onClick={handleUploadOrUpdate}
                   disabled={isLoading}
                   className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"
                 >
                   {isLoading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Updating...
                     </>
                   ) : (
-                    'Update Photo'
+                    "Update Photo"
                   )}
-              </button>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {/* Upload Modal */}
-    {showUploadModal && (
-      <div 
-        className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
-        onClick={handleCloseUploadModal}
-      >
-        <div 
-          className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-          onClick={(e) => e.stopPropagation()}
+      {/* Upload Modal */}
+      {showUploadModal && (
+        <div
+          className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleCloseUploadModal}
         >
-          {/* Modal Header */}
-          <div className="px-6 py-4 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Upload New Photo</h2>
-                <p className="text-sm text-gray-600 mt-1">Add a new photo to your gallery</p>
-              </div>
-              <button
-                onClick={handleCloseUploadModal}
-                className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+          <div
+            className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-gray-200">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    Upload New Photo
+                  </h2>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Add a new photo to your gallery
+                  </p>
                 </div>
-            </div>
-
-          {/* Modal Content */}
-          <div className="p-6 space-y-6">
-            {/* File Upload Section */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Photo File
-              </label>
-              
-              {/* Image Preview */}
-              {previewUrl && (
-                <div className="mb-4 text-center">
-                  <div className="inline-block relative">
-                    <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 max-w-xs">
-                      <Image
-                        width={300}
-                        height={300}
-                        src={previewUrl}
-                        alt="Preview"
-                        className="w-full h-full object-cover"
-                      />
-          </div>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-2">Image Preview</p>
-                </div>
-              )}
-              
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
-                <div className="space-y-1 text-center">
-                  <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                  <div className="flex text-sm text-gray-600">
-                    <label htmlFor="upload-file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                      <span>{previewUrl ? "Change file" : "Upload a file"}</span>
-                      <input
-                        id="upload-file-upload"
-                        name="upload-file-upload"
-                        type="file"
-                        className="sr-only"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
-                        accept="image/*"
-                      />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
-                  </div>
-                  <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                </div>
+                <button
+                  onClick={handleCloseUploadModal}
+                  className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
 
-            {/* Form Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Modal Content */}
+            <div className="p-6 space-y-6">
+              {/* File Upload Section */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Photo Title
+                  Photo File
                 </label>
-                <input
-                  type="text"
-                  placeholder="Enter photo title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                />
-                </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Tags (comma separated)
-                </label>
-                <input
-                  type="text"
-                  placeholder="tag1, tag2, tag3"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description (Indonesian)
-                </label>
-                <textarea
-                  placeholder="Enter Indonesian description"
-                  value={descriptionID}
-                  onChange={(e) => setDescriptionId(e.target.value)}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description (English)
-                </label>
-                <textarea
-                  placeholder="Enter English description"
-                  value={descriptionEN}
-                  onChange={(e) => setDescriptionEn(e.target.value)}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
-                />
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-                          <button
-                onClick={handleCloseUploadModal}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-                          >
-                Cancel
-                          </button>
-                          <button
-                onClick={handleUploadOrUpdate}
-                disabled={!file || !title || isLoading}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"
-              >
-                {isLoading ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                    Uploading...
-                  </>
-                ) : (
-                  'Upload Photo'
-                )}
-                          </button>
-                        </div>
+                {/* Image Preview */}
+                {previewUrl && (
+                  <div className="mb-4 text-center">
+                    <div className="inline-block relative">
+                      <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 max-w-xs">
+                        <Image
+                          width={300}
+                          height={300}
+                          src={previewUrl}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </div>
-      </div>
-    )}
+                    <p className="text-sm text-gray-600 mt-2">Image Preview</p>
+                  </div>
+                )}
 
-    {/* Delete Confirmation Modal */}
-    {showDeleteConfirm && (
-      <div 
-        className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
-        onClick={handleCancelDelete}
-      >
-        <div 
-          className="bg-white rounded-lg shadow-xl max-w-md w-full"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Modal Header */}
-          <div className="px-6 py-4 border-b border-gray-200">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-lg font-medium text-gray-900">Delete Photo</h3>
-                <p className="text-sm text-gray-500">This action cannot be undone</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Modal Content */}
-          <div className="px-6 py-4">
-            <div className="text-sm text-gray-700">
-              <p className="mb-4">
-                Are you sure you want to delete this photo? This will permanently remove the image from both your gallery and cloud storage.
-              </p>
-              <div className="bg-red-50 border border-red-200 rounded-md p-3">
-                <div className="flex">
-                  <div className="flex-shrink-0">
-                    <svg className="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors duration-200">
+                  <div className="space-y-1 text-center">
+                    <svg
+                      className="mx-auto h-12 w-12 text-gray-400"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                    >
+                      <path
+                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
-                        </div>
-                  <div className="ml-3">
-                    <h4 className="text-sm font-medium text-red-800">Warning</h4>
-                    <p className="text-sm text-red-700 mt-1">
-                      This action is permanent and cannot be recovered. The photo will be deleted from:
+                    <div className="flex text-sm text-gray-600">
+                      <label
+                        htmlFor="upload-file-upload"
+                        className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
+                      >
+                        <span>
+                          {previewUrl ? "Change file" : "Upload a file"}
+                        </span>
+                        <input
+                          id="upload-file-upload"
+                          name="upload-file-upload"
+                          type="file"
+                          className="sr-only"
+                          ref={fileInputRef}
+                          onChange={handleFileChange}
+                          accept="image/*"
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      PNG, JPG, GIF up to 10MB
                     </p>
-                    <ul className="text-sm text-red-700 mt-2 list-disc list-inside">
-                      <li>Your gallery</li>
-                      <li>Cloud storage</li>
-                      <li>All associated metadata</li>
-                    </ul>
                   </div>
                 </div>
               </div>
-                        </div>
-                      </div>
-                      
-          {/* Modal Actions */}
-          <div className="px-6 py-4 bg-gray-50 rounded-b-lg">
-            <div className="flex justify-end space-x-3">
-              <button
-                onClick={handleCancelDelete}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleConfirmDelete}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
-              >
-                Delete Photo
-              </button>
-            </div>
-          </div>
-                          </div>
-                        </div>
-                      )}
-                      
-    {/* Final Delete Confirmation Modal */}
-    {showFinalConfirm && (
-      <div 
-        className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
-        onClick={handleCancelFinalDelete}
-      >
-        <div 
-          className="bg-white rounded-lg shadow-xl max-w-md w-full"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Modal Header */}
-          <div className="px-6 py-4 border-b border-gray-200">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-lg font-medium text-gray-900">Final Confirmation</h3>
-                <p className="text-sm text-gray-500">Last chance to cancel</p>
-              </div>
-            </div>
-          </div>
 
-          {/* Modal Content */}
-          <div className="px-6 py-4">
-            <div className="text-sm text-gray-700">
-              <p className="mb-4 font-medium">
-                Are you absolutely sure you want to delete this photo?
-              </p>
-              <div className="bg-red-50 border border-red-200 rounded-md p-3">
-                <div className="flex">
-                  <div className="flex-shrink-0">
-                    <svg className="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                    </svg>
-                      </div>
-                  <div className="ml-3">
-                    <h4 className="text-sm font-medium text-red-800">⚠️ Final Warning</h4>
-                    <p className="text-sm text-red-700 mt-1">
-                      This is your final confirmation. Once deleted, the photo will be permanently removed and cannot be recovered.
-                    </p>
-                    </div>
-                  </div>
+              {/* Form Fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Photo Title
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter photo title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tags (comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="tag1, tag2, tag3"
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Description (Indonesian)
+                  </label>
+                  <textarea
+                    placeholder="Enter Indonesian description"
+                    value={descriptionID}
+                    onChange={(e) => setDescriptionId(e.target.value)}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Description (English)
+                  </label>
+                  <textarea
+                    placeholder="Enter English description"
+                    value={descriptionEN}
+                    onChange={(e) => setDescriptionEn(e.target.value)}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                <button
+                  onClick={handleCloseUploadModal}
+                  className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleUploadOrUpdate}
+                  disabled={!file || !title || isLoading}
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"
+                >
+                  {isLoading ? (
+                    <>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Uploading...
+                    </>
+                  ) : (
+                    "Upload Photo"
+                  )}
+                </button>
               </div>
             </div>
-          </div>
-
-          {/* Modal Actions */}
-          <div className="px-6 py-4 bg-gray-50 rounded-b-lg">
-            <div className="flex justify-end space-x-3">
-              <button
-                onClick={handleCancelFinalDelete}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleFinalDelete}
-                disabled={isLoading}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"
-              >
-                {isLoading ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Deleting...
-                  </>
-                ) : (
-                  'Yes, Delete Forever'
-                )}
-              </button>
           </div>
         </div>
-      </div>
-      </div>
-    )}
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div
+          className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleCancelDelete}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-gray-200">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-6 w-6 text-red-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-lg font-medium text-gray-900">
+                    Delete Photo
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    This action cannot be undone
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="px-6 py-4">
+              <div className="text-sm text-gray-700">
+                <p className="mb-4">
+                  Are you sure you want to delete this photo? This will
+                  permanently remove the image from both your gallery and cloud
+                  storage.
+                </p>
+                <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg
+                        className="h-5 w-5 text-red-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                        />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h4 className="text-sm font-medium text-red-800">
+                        Warning
+                      </h4>
+                      <p className="text-sm text-red-700 mt-1">
+                        This action is permanent and cannot be recovered. The
+                        photo will be deleted from:
+                      </p>
+                      <ul className="text-sm text-red-700 mt-2 list-disc list-inside">
+                        <li>Your gallery</li>
+                        <li>Cloud storage</li>
+                        <li>All associated metadata</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="px-6 py-4 bg-gray-50 rounded-b-lg">
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={handleCancelDelete}
+                  className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleConfirmDelete}
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
+                >
+                  Delete Photo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Final Delete Confirmation Modal */}
+      {showFinalConfirm && (
+        <div
+          className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleCancelFinalDelete}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-gray-200">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-6 w-6 text-red-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-lg font-medium text-gray-900">
+                    Final Confirmation
+                  </h3>
+                  <p className="text-sm text-gray-500">Last chance to cancel</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="px-6 py-4">
+              <div className="text-sm text-gray-700">
+                <p className="mb-4 font-medium">
+                  Are you absolutely sure you want to delete this photo?
+                </p>
+                <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg
+                        className="h-5 w-5 text-red-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                        />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h4 className="text-sm font-medium text-red-800">
+                        ⚠️ Final Warning
+                      </h4>
+                      <p className="text-sm text-red-700 mt-1">
+                        This is your final confirmation. Once deleted, the photo
+                        will be permanently removed and cannot be recovered.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="px-6 py-4 bg-gray-50 rounded-b-lg">
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={handleCancelFinalDelete}
+                  className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleFinalDelete}
+                  disabled={isLoading}
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center"
+                >
+                  {isLoading ? (
+                    <>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Deleting...
+                    </>
+                  ) : (
+                    "Yes, Delete Forever"
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

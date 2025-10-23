@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 interface CardProps {
-  description: string;
+  description?: string;
   url: string;
   onClick?: () => void;
 }

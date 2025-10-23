@@ -48,7 +48,7 @@ const CardLayout = () => {
         </h2>
       </div>
       <div>
-        <div className="min-h-screen bg-gray-100 dark:bg-blue-900 p-8">
+        <div className="min-h-screen dark:bg-blue-900 p-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {photos.map((photo, index) => (
               <Card

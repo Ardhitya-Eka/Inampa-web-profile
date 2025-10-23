@@ -11,9 +11,57 @@ import { useTranslations } from "next-intl";
 
 import { useRouter } from "next/router";
 import { FiSettings } from "react-icons/fi";
+
 const Navbar = () => {
-  const pdfUrl = "/pdf/Inampa.pdf";
-  const pdfName = "Download pdf";
+  const organisasi = [
+    {
+      id: 1,
+      name: "Sejarah Inampa",
+      link: "https://www.inampa.org/",
+    },
+    {
+      id: 2,
+      name: "Tentang Inampa",
+      link: "https://www.inampa.org/organisasi-inampa",
+    },
+    {
+      id: 3,
+      name: "Struktur Organisasi",
+      link: "https://www.inampa.org/struktur-organisasi-inampa",
+    },
+    ,
+    {
+      id: 4,
+      name: "Dewan Pembina",
+      link: "https://www.inampa.org/program-kerja-inampa",
+    },
+    {
+      id: 5,
+      name: "Dewan Penasihat",
+      link: "https://www.inampa.org/peraturan-inampa",
+    },
+    {
+      id: 6,
+      name: "MKE",
+      link: "https://www.inampa.org/peraturan-inampa",
+    },
+    {
+      id: 7,
+      name: "Staf Ahli",
+      link: "https://www.inampa.org/peraturan-inampa",
+    },
+    {
+      id: 8,
+      name: "DPW INAMPA",
+      link: "https://www.inampa.org/peraturan-inampa",
+    },
+    {
+      id: 9,
+      name: "IMPA",
+      link: "https://www.inampa.org/peraturan-inampa",
+    },
+  ];
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -54,7 +102,7 @@ const Navbar = () => {
             className={
               scrolled
                 ? "text-xl font-bold text-blue-600"
-                : "text-xl font-bold text-white"
+                : "text-xl font-bold text-blue-600"
             }
           >
             INAMPA
@@ -66,18 +114,63 @@ const Navbar = () => {
           className={
             scrolled
               ? "hidden md:flex space-x-6 text-gray-900 font-medium items-center"
-              : "hidden md:flex space-x-6 text-white font-medium items-center"
+              : "hidden md:flex space-x-6 text-slate-700 font-medium items-center"
           }
         >
-          <a href="#home" className="hover:text-blue-600 transition">
+          <a href="/" className="hover:text-blue-600 transition">
             {t("home")}
           </a>
-          <a href="#about" className="hover:text-blue-600 transition">
-            {t("about")}
-          </a>
-          <a href="#photo" className="hover:text-blue-600 transition">
-            {t("Gallery")}
-          </a>
+
+          {/* ORGANISASI DROPDOWN */}
+
+          <div>
+            <button
+              onClick={() => {
+                setIsOpen(!isOpen);
+                if (!isOpen) setIsMediaOpen(false); // Close  dropdown when opening another dropdown
+              }}
+              className="flex items-center gap-1"
+            >
+              {t("organization")}
+              {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            </button>
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className={
+                    scrolled
+                      ? `absolute  top-full w-40  overflow-hidden shadow-xl border-t border-gray-700 bg-white backdrop-blur-md rounded-md`
+                      : `absolute  top-full w-40  overflow-hidden shadow-2xl border-t border-gray-700 bg-white/20 backdrop-blur-md rounded-md`
+                  }
+                >
+                  {organisasi.map((item) => (
+                    <motion.a
+                      key={item?.name}
+                      href="/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
+                    >
+                      {item?.name}
+                    </motion.a>
+                  ))}
+                  {/* <motion.a
+                    href="/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
+                  >
+                    Sejarah Inampa
+                  </motion.a> */}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           {/* Media Dropwown pakai motion.div dan motion.a */}
           <div>
             <button
@@ -88,7 +181,11 @@ const Navbar = () => {
               className="flex items-center gap-1"
             >
               {t("media")}
-              {isMediaOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              {isMediaOpen ? (
+                <ChevronUp size={20} />
+              ) : (
+                <ChevronDown size={20} />
+              )}
             </button>
             <AnimatePresence>
               {isMediaOpen && (
@@ -126,47 +223,6 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
           {/* s Dropwown pakai motion.div dan motion.a */}
-          {/* Contact Link */}
-          
-          <a href="#contact" className="hover:text-blue-600 transition">
-            {t("contact")}
-          </a>
-          <div>
-            <button
-              onClick={() => {
-                setIsOpen(!isOpen);
-                if (!isOpen) setIsMediaOpen(false); // Close  dropdown when opening another dropdown
-              }}
-              className="flex items-center gap-1"
-            >
-              {t("organization")}
-              {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            <AnimatePresence>
-              {isOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className={
-                    scrolled
-                      ? `absolute  top-full w-40  overflow-hidden shadow-xl border-t border-gray-700 bg-white backdrop-blur-md rounded-md`
-                      : `absolute  top-full w-40  overflow-hidden shadow-2xl border-t border-gray-700 bg-white/20 backdrop-blur-md rounded-md`
-                  }
-                >
-                  <motion.a
-                    href={pdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
-                  >
-                    {pdfName}
-                  </motion.a>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
 
           <TogleLanguage />
           <button
@@ -218,7 +274,9 @@ const Navbar = () => {
               {t("Gallery")}
             </a>
             <div className="border-t border-gray-200 pt-2 mt-2">
-              <div className="text-sm font-medium text-gray-500 mb-2">{t("media")}</div>
+              <div className="text-sm font-medium text-gray-500 mb-2">
+                {t("media")}
+              </div>
               <a
                 href="/media/nasional"
                 className="block py-1 pl-4 text-sm hover:text-blue-600"
@@ -247,13 +305,6 @@ const Navbar = () => {
               onClick={() => setMenuOpen(false)}
             >
               {t("contact")}
-            </a>
-            <a
-              href={pdfUrl}
-              className="hover:text-blue-600"
-              onClick={() => setMenuOpen(false)}
-            >
-              {t("organization")}
             </a>
           </nav>
         </div>

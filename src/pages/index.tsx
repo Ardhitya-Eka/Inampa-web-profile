@@ -6,8 +6,7 @@ import VisiMisi from "@/components/layouts/VisiMisiLayouts/VisiMisi";
 import ProgramKerja from "@/components/layouts/ProgramKerjaLayouts/ProgramKerja";
 
 import { GetStaticPropsContext } from "next";
-import Footer from "@/components/layouts/Footer/Footer";
-import GetConnected from "@/components/layouts/Contact/ContactLayout";
+
 import BannerLayouts from "@/components/layouts/Banner/BannerLayouts";
 
 const Home = () => {
@@ -44,22 +43,6 @@ const Home = () => {
       {/* Program Card */}
       <div className="lg:-mt-96 md:-mt-70 sm:-mt-60">
         <ProgramKerja />
-      </div>
-      <GetConnected />
-      {/* FOOTER Slogan */}
-
-      <div className="mt-1">
-        <div className="flex justify-center">
-          <h3 className="text-3xl font-bold text-slate-500 dark:text-white mb-8 text-center">
-            INAMPA MARITIME ADVISOR TO THE WORLD
-          </h3>
-        </div>
-        <div className="flex justify-center -mt-5">
-          <p className="px-4">"BUILDING RESPONSIBLE PARTNERSHIPS"</p>
-        </div>
-      </div>
-      <div>
-        <Footer />
       </div>
     </div>
   );
