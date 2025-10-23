@@ -34,8 +34,8 @@ export default function ModalCarousel({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-3xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-sm">
+      <div className="relative w-full max-w-3xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl ">
         {/* Tombol close */}
         <button
           onClick={onClose}
@@ -53,7 +53,7 @@ export default function ModalCarousel({
             <ChevronLeft className="w-6 h-6 text-gray-800 dark:text-gray-200" />
           </button>
 
-          <div className="relative w-[500px] h-[350px]">
+          <div className="relative w-[1080px] h-[720px]">
             <Image
               src={images[index].url}
               alt={images[index].title}

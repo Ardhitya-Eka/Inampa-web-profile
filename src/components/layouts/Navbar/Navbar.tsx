@@ -17,48 +17,48 @@ const Navbar = () => {
     {
       id: 1,
       name: "Sejarah Inampa",
-      link: "https://www.inampa.org/",
+      link: "/organisasi/sejarah-inampa",
     },
     {
       id: 2,
       name: "Tentang Inampa",
-      link: "https://www.inampa.org/organisasi-inampa",
+      link: "/organisasi/tentang-inampa",
     },
     {
       id: 3,
       name: "Struktur Organisasi",
-      link: "https://www.inampa.org/struktur-organisasi-inampa",
+      link: "/organisasi/struktur-organisasi",
     },
     ,
     {
       id: 4,
       name: "Dewan Pembina",
-      link: "https://www.inampa.org/program-kerja-inampa",
+      link: "/organisasi/dewan-pembina",
     },
     {
       id: 5,
       name: "Dewan Penasihat",
-      link: "https://www.inampa.org/peraturan-inampa",
+      link: "/organisasi/dewan-penasihat",
     },
     {
       id: 6,
       name: "MKE",
-      link: "https://www.inampa.org/peraturan-inampa",
+      link: "/organisasi/mke",
     },
     {
       id: 7,
       name: "Staf Ahli",
-      link: "https://www.inampa.org/peraturan-inampa",
+      link: "/organisasi/staff-ahli",
     },
     {
       id: 8,
       name: "DPW INAMPA",
-      link: "https://www.inampa.org/peraturan-inampa",
+      link: "/organisasi/dpw-inampa",
     },
     {
       id: 9,
       name: "IMPA",
-      link: "https://www.inampa.org/peraturan-inampa",
+      link: "/organisasi/impa",
     },
   ];
 
@@ -150,22 +150,14 @@ const Navbar = () => {
                   {organisasi.map((item) => (
                     <motion.a
                       key={item?.name}
-                      href="/"
-                      target="_blank"
+                      href={item?.link}
                       rel="noopener noreferrer"
                       className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
                     >
                       {item?.name}
                     </motion.a>
                   ))}
-                  {/* <motion.a
-                    href="/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
-                  >
-                    Sejarah Inampa
-                  </motion.a> */}
+                 
                 </motion.div>
               )}
             </AnimatePresence>
