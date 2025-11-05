@@ -1,17 +1,18 @@
-import BaliForm from "@/components/forms/internasionalForm/Bali/BaliForm";
 
-const MediaNasional = () => {
-  
+import NasionalForm from "@/components/forms/nasionalForm/NasionalForm";
+
+
+const MediaCertificate = () => {
   return (
     <div>
-      <div>
-                <div className="text-center mb-10 py-6 text-2xl font-bold mt-5">
-                  Nasional Event
-                </div>
-                <BaliForm />
-              </div>
+      <div className="text-center mt-29 mb-20 text-3xl font-bold">
+        Nasional Event
+      </div>
+      <div className="min-h-screen bg-gray-100 dark:bg-blue-900 p-8">
+        <NasionalForm/>
+      </div>
     </div>
   );
 };
 
-export default MediaNasional;
+export default MediaCertificate;
