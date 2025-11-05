@@ -1,5 +1,4 @@
-import Card from "@/components/ui/Card/card";
-import { sertifikat } from "@/lib/getImage/getImage";
+import BaliForm from "@/components/forms/internasionalForm/Bali/BaliForm";
 
 
 const MediaCertificate = () => {
@@ -17,15 +16,7 @@ const MediaCertificate = () => {
         </Link> */}
       </div>
       <div className="min-h-screen bg-gray-100 dark:bg-blue-900 p-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {sertifikat.map((item) => (
-            <Card 
-              key={item.id}
-              url={item.url}
-              
-            />
-          ))}
-        </div>
+        <BaliForm />
       </div>
     </div>
   );

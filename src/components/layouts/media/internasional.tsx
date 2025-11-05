@@ -1,36 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Card from "@/components/ui/Card/card";
-import ModalCarousel from "@/components/ui/Card/ModalCarousel";
-
-import { db } from "@/lib/firebase/init";
-import { doc, onSnapshot } from "firebase/firestore";
-
-type AlbumInternasional1={
-  url:string,
-  title:string
-}
+import BaliForm from "@/components/forms/internasionalForm/Bali/BaliForm";
 const MediaInternasional = () => {
-  const [photos, setPhotos] = useState<AlbumInternasional1[]>([])
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-      const albumRef = doc(db, "albums", "internasional1");
-  
-      const unsub = onSnapshot(albumRef, (docSnap) => {
-        if (docSnap.exists()) {
-          setPhotos(docSnap.data().bali || []);
-        } else {
-          setPhotos([]);
-        }
-      });
-  
-      return () => unsub();
-    }, []);
-  const openModal = (index: number) => {
-    setCurrentIndex(index);
-    setIsOpen(true);
-  };
   return (
     <div>
       <div className="text-center mt-29  text-3xl font-bold">
@@ -41,28 +10,7 @@ const MediaInternasional = () => {
           <div className="text-center mb-10 py-6 text-2xl font-bold">
             THE 1st ASIA PACIFI MARITIME PILOTS' FORUM (APMPF) BALI - INDONESIA 2017
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-20">
-            {photos.map((item, index) => (
-              
-                <Card
-                  key={item.title}
-                  url={item.url}
-                  onClick={() => openModal(index)}
-                />
-              
-            ))}
-            {isOpen && (
-                  <ModalCarousel
-                    isOpen={isOpen}
-                    currentIndex={currentIndex}
-                    onClose={() => setIsOpen(false)}
-                    images={photos.map((photo) => ({
-                      url: photo.url,
-                      title: photo.title,
-                    }))}
-                  />
-                )}
-          </div>
+          <BaliForm />
         </div>
         {/* ALbum 2 inter */}
         {/* <div>
