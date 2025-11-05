@@ -71,6 +71,10 @@ import nasional10 from "@/../../public/nasional/Slide10.jpg";
 import nasional11 from "@/../../public/nasional/Slide11.jpg";
 import nasional12 from "@/../../public/nasional/Slide12.jpg";
 
+
+ 
+
+
 // Awal Export Kegiatan Internasional
 export const mediaInternasional1st = [
   {
@@ -337,3 +341,4 @@ export const albumNasional = [
     url:nasional12.src
   }
 ]
+
