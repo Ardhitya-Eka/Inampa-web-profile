@@ -1,6 +1,4 @@
-
 import NasionalForm from "@/components/forms/nasionalForm/NasionalForm";
-
 
 const MediaCertificate = () => {
   return (
@@ -9,7 +7,7 @@ const MediaCertificate = () => {
         Nasional Event
       </div>
       <div className="min-h-screen bg-gray-100 dark:bg-blue-900 p-8">
-        <NasionalForm/>
+        <NasionalForm />
       </div>
     </div>
   );

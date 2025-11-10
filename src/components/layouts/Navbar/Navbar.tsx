@@ -141,11 +141,7 @@ const Navbar = () => {
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className={
-                    scrolled
-                      ? `absolute  top-full w-40  overflow-hidden shadow-xl border-t border-gray-700 bg-white backdrop-blur-md rounded-md`
-                      : `absolute  top-full w-40  overflow-hidden shadow-2xl border-t border-gray-700 bg-white/20 backdrop-blur-md rounded-md`
-                  }
+                  className="absolute  top-full w-40  overflow-hidden shadow-xl border-t border-gray-700 bg-white backdrop-blur-md rounded-md mt-1"
                 >
                   {organisasi.map((item) => (
                     <motion.a
@@ -157,7 +153,6 @@ const Navbar = () => {
                       {item?.name}
                     </motion.a>
                   ))}
-                 
                 </motion.div>
               )}
             </AnimatePresence>
@@ -186,11 +181,7 @@ const Navbar = () => {
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className={
-                    scrolled
-                      ? `absolute top-full w-48 overflow-hidden shadow-xl border-t border-gray-700 bg-white backdrop-blur-md rounded-md`
-                      : `absolute top-full w-48 overflow-hidden shadow-2xl border-t border-gray-700 bg-white/20 backdrop-blur-md rounded-md`
-                  }
+                  className="absolute  top-full w-40  overflow-hidden shadow-xl border-t border-gray-700 bg-white backdrop-blur-md rounded-md mt-1"
                 >
                   <motion.a
                     href="/media/nasional"
@@ -244,27 +235,29 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <nav className="flex flex-col px-4 py-2 space-y-2 text-gray-700">
-            <a
-              href="#home"
-              className="hover:text-blue-600"
-              onClick={() => setMenuOpen(false)}
-            >
-              {t("home")}
-            </a>
-            <a
-              href="#about"
-              className="hover:text-blue-600"
-              onClick={() => setMenuOpen(false)}
-            >
-              {t("about")}
-            </a>
-            <a
-              href="#photo"
-              className="hover:text-blue-600"
-              onClick={() => setMenuOpen(false)}
-            >
-              {t("Gallery")}
-            </a>
+            <div>
+              <div className="mt-2">
+                <a href="/" className="block hover:text-blue-600">
+                  Beranda
+                </a>
+              </div>
+            </div>
+            <div className="border-t border-gray-200 pt-2 mt-2">
+              <div>
+                <div className="text-sm font-medium text-gray-500 mb-2">
+                  {t("organization")}
+                </div>
+                {organisasi.map((item) => (
+                  <motion.a
+                    key={item?.id}
+                    href={item?.link}
+                    className="block py-1 pl-4 text-sm hover:text-blue-600"
+                  >
+                    {item?.name}
+                  </motion.a>
+                ))}
+              </div>
+            </div>
             <div className="border-t border-gray-200 pt-2 mt-2">
               <div className="text-sm font-medium text-gray-500 mb-2">
                 {t("media")}
@@ -291,13 +284,6 @@ const Navbar = () => {
                 {t("certificate")}
               </a>
             </div>
-            <a
-              href="#contact"
-              className="hover:text-blue-600"
-              onClick={() => setMenuOpen(false)}
-            >
-              {t("contact")}
-            </a>
           </nav>
         </div>
       )}
