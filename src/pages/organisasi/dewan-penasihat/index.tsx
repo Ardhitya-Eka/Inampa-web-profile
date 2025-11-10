@@ -2,41 +2,50 @@ import Image from "next/image";
 import { GetStaticPropsContext } from "next";
 import Link from "next/link";
 interface Advisor {
-  name: string;
+  instansi: string;
   logo: string;
   link: string;
+  nama: string;
 }
 
 const advisors: Advisor[] = [
   {
-    name: "Menteri Koordinator Bidang Infrastruktur dan Pembangunan Kewilayahan Indonesia",
+    instansi:
+      "Menteri Koordinator Bidang Infrastruktur dan Pembangunan Kewilayahan Indonesia",
     logo: "/mentri-kordinator.jpg",
     link: "https://kemenkoinfra.go.id/detailpage/menteri-koordinator-bidang-infrastruktur-dan-pembangunan-kewilayahan",
+    nama: "Agus Harimurti Yudhoyono",
   },
   {
-    name: "Menteri Perhubungan Republik Indonesia",
+    instansi: "Menteri Perhubungan Republik Indonesia",
     logo: "/mentri-perhubungan.jpg",
     link: "https://ppid.dephub.go.id/informasi-berkala/index#show",
+    nama: "Dudy Purwagandhi",
   },
   {
-    name: "Kepala Staf TNI – AL",
+    instansi: "Kepala Staf TNI – AL",
     logo: "/KSAL-TNI-AL.jpg",
     link: "https://id.wikipedia.org/wiki/Muhammad_Ali_(militer,_lahir_1967)",
+    nama: "Laksamana TNI Dr. Muhammad Ali",
   },
   {
-    name: "Kepala Badan Keamanan Laut Republik Indonesia",
+    instansi: "Kepala Badan Keamanan Laut Republik Indonesia",
     logo: "/kepala-BAKAMLA.jpeg",
-    link: "https://bakamla.go.id/profile/detail_profile/laksdya-tni-dr-irvansyah-s-h-m-tr-opsla",
+    link: "https://id.wikipedia.org/wiki/Irvansyah_(militer)",
+    nama: "Laksdya TNI Dr. Irvansyah, S.H., M.Tr.Opsla",
   },
   {
-    name: "Direktur Jenderal Perhubungan Laut – Kementerian Perhubungan Republik Indonesia",
+    instansi:
+      "Direktur Jenderal Perhubungan Laut – Kementerian Perhubungan Republik Indonesia",
     logo: "/dirjen-hubla.jpeg",
     link: "https://hubla.dephub.go.id/home/pejabat-djpl/1?id=1",
+    nama: "Muhammad Masyhud, S.T., M.T.",
   },
   {
-    name: "Direktur Polisi Perairan Korpolairud Baharkam Polri",
-    logo: "",
-    link: "",
+    instansi: "Direktur Polisi Perairan Korpolairud Baharkam Polri",
+    logo: "/direktur-Korpolairud.jpg",
+    link: "https://id.wikipedia.org/wiki/Idil_Tabransyah",
+    nama: "Brigjen. Pol. Idil Tabransyah, S.H., M.M.",
   },
 ];
 
@@ -61,13 +70,14 @@ export default function HomePage() {
                   <Image
                     fill
                     src={advisor.logo}
-                    alt={advisor.name}
+                    alt={advisor.instansi}
                     className="object-cover"
                   />
                 </div>
               </div>
+              <h3 className="font-bold">{advisor.nama}</h3>
               <p className="text-center text-gray-700 font-medium pt-5">
-                {advisor.name}
+                {advisor.instansi}
               </p>
             </Link>
           ))}
