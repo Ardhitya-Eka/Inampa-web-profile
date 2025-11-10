@@ -1,0 +1,40 @@
+[33m160ca60[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m add direktur polisi air dan udara di bagian page dewan pembina
+[33m1d00293[m  change image and delete temporary file & adding dewan pembina page
+[33m3ee2a5b[m add sertifikat & nasional Form
+[33me612ccb[m adding form , recode organisasi page
+[33m3f88ca9[m change code internasional using firebase
+[33m0d09af7[m update organisasi navbar
+[33m8999629[m Change Navbar & add new Media Page
+[33m1180643[m fix all intl, add drowpdown navbar
+[33m2d88233[m Add next-env.d.ts to .gitignore
+[33m84f9c06[m Add .gitignore and remove env.txt from tracking
+[33ma72ea6b[m fix all in the admin
+[33m7ecc231[m fix image previe
+[33mc31142d[m restyle the admin page
+[33mb1e6ee7[m Restyle the login page
+[33m8ac9632[m change acount
+[33md46e5d8[m add translation tittle galery
+[33me1ec959[m install firebase admin
+[33m3c7a738[m checking
+[33mb653ba9[m add login google, auth,database,& admin page
+[33m6d2f237[m change pdf
+[33m6e58892[m add acordion
+[33m66ab9e5[m add accordion
+[33mc3c39a5[m change scale motion frammer
+[33m9667c3e[m add mobile view visi misi
+[33mfe8ff8a[m change next config, add new fix intl18
+[33m026f8e4[m Migration file & add middleware for intl18
+[33mbc27314[m Fix tailwind
+[33ma7b5538[m Change about me
+[33m8ab84e8[m add link Nav
+[33m9917e9e[m check file
+[33ma30e56c[m Add Contact and closing footer
+[33mdb45644[m Add Motion Transisi
+[33mfa05c87[m change bg
+[33m612f6b2[m add multi language and background
+[33mda72ddf[m Add about ,card,Navbar,Visi,Programkerja Layouts
+[33m26f54db[m off eslint
+[33m7a2cb34[m adding Navbar,animation scrolling
+[33m16af968[m check file
+[33m28f8203[m add galery style and layouts
+[33m8fe2a04[m Initial commit from Create Next App
