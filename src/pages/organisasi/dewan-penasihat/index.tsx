@@ -12,38 +12,38 @@ const advisors: Advisor[] = [
   {
     instansi:
       "Menteri Koordinator Bidang Infrastruktur dan Pembangunan Kewilayahan Indonesia",
-    logo: "/mentri-kordinator.jpg",
+    logo: "/dewan-penasihat/mentri-kordinator.jpg",
     link: "https://kemenkoinfra.go.id/detailpage/menteri-koordinator-bidang-infrastruktur-dan-pembangunan-kewilayahan",
     nama: "Agus Harimurti Yudhoyono",
   },
   {
     instansi: "Menteri Perhubungan Republik Indonesia",
-    logo: "/mentri-perhubungan.jpg",
+    logo: "/dewan-penasihat/mentri-perhubungan.jpg",
     link: "https://ppid.dephub.go.id/informasi-berkala/index#show",
     nama: "Dudy Purwagandhi",
   },
   {
     instansi: "Kepala Staf TNI – AL",
-    logo: "/KSAL-TNI-AL.jpg",
+    logo: "/dewan/penasihat/KSAL-TNI-AL.jpg",
     link: "https://id.wikipedia.org/wiki/Muhammad_Ali_(militer,_lahir_1967)",
     nama: "Laksamana TNI Dr. Muhammad Ali",
   },
   {
     instansi: "Kepala Badan Keamanan Laut Republik Indonesia",
-    logo: "/kepala-BAKAMLA.jpeg",
+    logo: "/dewan-penasihat/kepala-BAKAMLA.jpeg",
     link: "https://id.wikipedia.org/wiki/Irvansyah_(militer)",
     nama: "Laksdya TNI Dr. Irvansyah, S.H., M.Tr.Opsla",
   },
   {
     instansi:
       "Direktur Jenderal Perhubungan Laut – Kementerian Perhubungan Republik Indonesia",
-    logo: "/dirjen-hubla.jpeg",
+    logo: "/dewan-penasihat/dirjen-hubla.jpeg",
     link: "https://hubla.dephub.go.id/home/pejabat-djpl/1?id=1",
     nama: "Muhammad Masyhud, S.T., M.T.",
   },
   {
     instansi: "Direktur Polisi Perairan Korpolairud Baharkam Polri",
-    logo: "/direktur-Korpolairud.jpg",
+    logo: "/dewan-penasihat/direktur-Korpolairud.jpg",
     link: "https://id.wikipedia.org/wiki/Idil_Tabransyah",
     nama: "Brigjen. Pol. Idil Tabransyah, S.H., M.M.",
   },
