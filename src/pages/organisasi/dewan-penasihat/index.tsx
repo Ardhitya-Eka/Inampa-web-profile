@@ -24,7 +24,7 @@ const advisors: Advisor[] = [
   },
   {
     instansi: "Kepala Staf TNI – AL",
-    logo: "/dewan/penasihat/KSAL-TNI-AL.jpg",
+    logo: "/dewan-penasihat/KSAL-TNI-AL.jpg",
     link: "https://id.wikipedia.org/wiki/Muhammad_Ali_(militer,_lahir_1967)",
     nama: "Laksamana TNI Dr. Muhammad Ali",
   },
