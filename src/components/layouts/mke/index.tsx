@@ -6,7 +6,7 @@ interface Member {
   name: string;
 }
 
-export default function Home() {
+export default function MKE() {
   const chair = "Capt. Medi Kusmana, M.Mar.";
   const viceChair = "Capt. Agoes Soeryanto, S.H., M.H., MBA.";
   const secretary = "Capt. Sonny M. Ichsan.";
@@ -39,7 +39,9 @@ export default function Home() {
         {/* Main Table */}
         <div className="bg-white shadow-lg rounded-lg p-6 border border-blue-100">
           <div className="mb-4">
-            <h2 className="text-xl font-semibold text-blue-700">Struktur Majelis</h2>
+            <h2 className="text-xl font-semibold text-blue-700">
+              Struktur Majelis
+            </h2>
             <ul className="mt-3 space-y-2 text-gray-700">
               <li>
                 <strong>Ketua Majelis:</strong> {chair}
@@ -55,7 +57,9 @@ export default function Home() {
 
           {/* Members */}
           <div className="mt-6">
-            <h2 className="text-xl font-semibold text-blue-700 mb-2">Anggota:</h2>
+            <h2 className="text-xl font-semibold text-blue-700 mb-2">
+              Anggota:
+            </h2>
             <ol className="list-decimal list-inside space-y-1 text-gray-700">
               {members.map((member, index) => (
                 <li key={index}>{member.name}</li>
@@ -65,7 +69,6 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        
       </div>
     </main>
   );
@@ -76,5 +79,5 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
     props: {
       messages: (await import(`../../../../messages/${locale}`)).default,
     },
-  }
+  };
 }

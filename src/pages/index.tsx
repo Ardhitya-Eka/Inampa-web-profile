@@ -41,7 +41,7 @@ const Home = () => {
         </div>
       </div>
       {/* Program Card */}
-      <div className="lg:-mt-96 md:-mt-70 sm:-mt-60">
+      <div className="">
         <ProgramKerja />
       </div>
     </div>

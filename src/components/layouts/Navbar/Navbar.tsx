@@ -21,42 +21,33 @@ const Navbar = () => {
     },
     {
       id: 2,
-      name: "Tentang Inampa",
-      link: "/organisasi/tentang-inampa",
-    },
-    {
-      id: 3,
       name: "Struktur Organisasi",
       link: "/organisasi/struktur-organisasi",
     },
     ,
     {
-      id: 4,
+      id: 3,
       name: "Dewan Pembina",
       link: "/organisasi/dewan-pembina",
     },
     {
+      id: 4,
+      name: "Pengurus Pusat",
+      link: "/organisasi/pengurus-pusat",
+    },
+
+    {
       id: 5,
-      name: "Dewan Penasihat",
-      link: "/organisasi/dewan-penasihat",
-    },
-    {
-      id: 6,
-      name: "MKE",
-      link: "/organisasi/mke",
-    },
-    {
-      id: 7,
       name: "Staf Ahli",
       link: "/organisasi/staff-ahli",
     },
     {
-      id: 8,
+      id: 6,
       name: "DPW INAMPA",
       link: "/organisasi/dpw-inampa",
     },
     {
-      id: 9,
+      id: 7,
       name: "IMPA",
       link: "/organisasi/impa",
     },

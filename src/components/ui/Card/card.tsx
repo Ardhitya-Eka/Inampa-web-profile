@@ -1,6 +1,6 @@
 // components/Card.tsx
 
-import Image from "next/image";
+import { CldImage } from "next-cloudinary";
 
 interface CardProps {
   description?: string;
@@ -16,7 +16,8 @@ export default function Card({ description, url, onClick }: CardProps) {
     >
       {/* Image: fixed height with consistent styling */}
       <div className="relative w-full h-56 overflow-hidden">
-        <Image
+        <CldImage
+          priority
           alt="Card Image"
           src={url}
           fill

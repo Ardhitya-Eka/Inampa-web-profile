@@ -7,19 +7,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-gradient-to-br from-[#002d6b] to-[#001a40] text-white">
       <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-10">
-        {/* Logo */}
-        <div className="flex flex-col items-center md:items-start">
-          {/* <Image
-            src={logoInampa} // ganti dengan path logo kamu di public/
-            alt="Inampa Logo"
-            width={150}
-            height={80}
-            className="mb-4"
-          /> */}
-          <p className="text-center md:text-left text-sm">
-            Indonesia Maritime Pilot's Association
-          </p>
-        </div>
+        <div className="flex flex-col items-center md:items-start"></div>
 
         {/* Alamat */}
         <div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import MKE from "@/components/layouts/mke";
 import { GetStaticPropsContext } from "next";
 import Link from "next/link";
 interface Advisor {
@@ -53,10 +54,13 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50  py-16 mb-5">
       <header className="bg-gradient-to-br from-[#002d6b] to-[#001a40] text-white py-12 text-center shadow-md">
-        <h1 className="text-4xl font-bold">Dewan Penasihat</h1>
+        <h1 className="text-4xl font-bold">Pengurus Pusat</h1>
       </header>
-
-      <main className="flex flex-col items-center mt-10">
+      <MKE />
+      <div className="flex flex-col items-center mt-10">
+        <h1 className="text-4xl font-bold text-center text-blue-800 mb-8">
+          Dewan Penasihat
+        </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl px-6">
           {advisors.map((advisor, index) => (
             <Link
@@ -82,7 +86,7 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-      </main>
+      </div>
     </div>
   );
 }
