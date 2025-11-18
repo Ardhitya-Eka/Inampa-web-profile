@@ -16,6 +16,7 @@ env.txt
 .next/
 out/
 next-env.d.ts
+server.js
 
 # Production build
 build/
