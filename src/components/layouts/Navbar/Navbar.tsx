@@ -96,7 +96,7 @@ const Navbar = () => {
           {/* Logo */}
           <Image
             src={Logo}
-            alt="INAMPA Logo"
+            alt="INAMPA"
             width={40}
             height={40}
             priority

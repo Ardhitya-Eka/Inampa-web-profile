@@ -2,6 +2,7 @@ import AboutLayout from "@/components/layouts/AboutLayouts/AboutLayouts";
 import CardLayout from "@/components/layouts/CardLayouts/CardLayouts";
 import Navbar from "@/components/layouts/Navbar/Navbar";
 import VisiMisi from "@/components/layouts/VisiMisiLayouts/VisiMisi";
+import Head from "next/head";
 
 import ProgramKerja from "@/components/layouts/ProgramKerjaLayouts/ProgramKerja";
 
@@ -10,6 +11,13 @@ import BannerLayouts from "@/components/layouts/Banner/BannerLayouts";
 const Home = () => {
   return (
     <div>
+      <Head>
+        <title>INAMPA - Indonesian Maritime Pilot’s Association</title>
+        <meta name="description" content="INDONESIAN MARITIME PILOTS ASSOCIATION (INAMPA) - Berdiri sejak tanggal 11 Maret 2003 dan merupakan organisasi profesi Perwira Pandu Maritim Indonesia" />
+        <link rel="canonical" href="https://inampa.org" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+      </Head>
       {/* NAVBAR */}
       <div className="">
         <BannerLayouts />
