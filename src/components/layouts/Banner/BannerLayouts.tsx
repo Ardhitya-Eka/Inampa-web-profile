@@ -1,12 +1,12 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import LogoBanner from "@/../public/Banner.jpg";
 import logoJangkar from "@/../../public/JANGKAR PANDU BARU.png";
 import logoInampa from "@/../../public/logoBanner.png";
 import logoImpa from "@/../../public/LOGO IMPA BARU.png";
-import { useTranslations } from "next-intl";
 const BannerLayouts = () => {
-  const h = useTranslations("banner");
+  const { locale } = useRouter();
   return (
     <div
       id="home"
@@ -49,8 +49,12 @@ const BannerLayouts = () => {
               src={logoImpa.src}
             />
           </div>
-          <h1 className="text-4xl font-bold">{h("title")}</h1>
-          <p className="text-lg md:text-xl max-w-xl mx-auto">{h("subtitle")}</p>
+          <h1 className="text-4xl font-bold">
+            {locale === "id" ? "Selamat Datang di INAMPA" : "Welcome to INAMPA"}
+          </h1>
+          <p className="text-lg md:text-xl max-w-xl mx-auto">
+            Indonesian Maritime Pilot’s Association
+          </p>
         </div>
       </motion.div>
     </div>

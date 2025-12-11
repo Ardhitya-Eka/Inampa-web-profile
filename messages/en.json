@@ -1,99 +1,12 @@
 {
   "Navbar": {
     "home": "Home",
-    "about": "About",
-    "Gallery": "Gallery",
+
     "media": "Media",
     "nasional": "National",
     "internasional": "International",
     "certificate": "Certificate",
-    "contact": "Contact",
-    "organization": "Organization"
-  },
-  "banner": {
-    "title": "Welcome to Website",
-    "subtitle": "Indonesian Maritime Pilot’s Association (INAMPA)"
-  },
-  "about": {
-    "titleAbout": "About Us",
-    "paragraph1": "(INAMPA) - Established on March 11, 2003, it is a professional organization of Indonesian maritime officers serving in central and regional government agencies, state-owned enterprises, regionally-owned enterprises, private enterprises, and other institutions, including those abroad.",
-    "paragraph2": "Pandu officers are highly valued professionals because they play a key role, are rare, have special skills, and are in high demand. Currently, there are approximately 1,200 members spread across the archipelago, from Sabang to Merauke, from Miangas to Rote, with the following main duties:",
-    "paragraph3": "In carrying out their noble duties, Maritime Scout Officers are bound by the following laws and conventions:",
-    "paragraph4": "Maritime Pilot Officers have contributed greatly to Indonesia's maritime safety for commercial and non-commercial vessels entering/leaving ports in Indonesia, including other waters that require safe, secure, efficient, and effective sailing services. These activities are closely related to Indonesia's competitiveness in the maritime sector and its decline in activity.",
-    "paragraph5": "Since 2017, INAMPA has been a member of the International Maritime Pilots' Association (IMPA), which is a strategic partner of the IMO (International Maritime Organization), a UN agency that oversees global maritime safety with approximately 185 member countries."
-  },
-  "visi": {
-    "title": "Vision",
-    "text": "Working together to do something better."
-  },
-  "misi": {
-    "title": "Mission",
-    "text1": "1. Enhancing the competence and professionalism of Maritime Pilot Officers through continuous education, training, certification, and development in accordance with national and international standards.",
-    "text2": "2. Upholding professional ethics and integrity in every execution of pilotage duties to ensure the safety and security of navigation.",
-    "text3": "3. Building strategic collaboration with the government, port authorities, shipping associations, educational institutions, and international maritime organizations to support the advancement of Indonesia's maritime sector.",
-    "text4": "4. Encouraging innovation and the use of modern maritime technology in pilotage activities to increase the efficiency and effectiveness of pilotage services.",
-    "text5": "5. Becoming a government partner in formulating maritime policies that prioritize the improvement of navigation safety, protection of the marine environment, and the welfare of the Pilot profession.",
-    "text6": "6. Cultivating a sense of brotherhood, solidarity, and professional pride among all Indonesian Maritime Pilot Officers."
-  },
 
-  "titleGaleri": {
-    "title": "INAMPA Gallery"
-  },
-  "ProgramJangkaPendek": {
-    "title": "Short-Term Program",
-    "paragraph1": "1. Institutional Development and Membership",
-    "text1Paraghraph1": "Drafting and establishing the Bylaws (AD/ART), professional code of ethics, and the central and regional organizational structure.",
-    "text1Paraghraph2": "Conducting national data collection of all Indonesian maritime pilot officers.",
-    "text1Paraghraph3": "Forming regional boards in major ports.",
-    "paragraph2": "2. Competency Enhancement",
-    "text2Paraghraph1": "Organizing workshops, seminars, and basic professional pilotage training.",
-    "text2Paraghraph2": "Developing an internal training curriculum based on SKKNI and IMO Standards.",
-    "text2Paraghraph3": "Conducting re-certification (re-validation) for members according to competency.",
-    "paragraph3": "3. Advocacy and Professional Ethics",
-    "text3Paraghraph1": "Drafting and socializing the Maritime Pilot Officer Code of Ethics.",
-    "text3Paraghraph2": "Establishing an advocacy and legal assistance team for members.",
-    "text3Paraghraph3": "Raising awareness about navigational safety and professional work ethics.",
-    "paragraph4": "4. Publication and Communication",
-    "text4Paraghraph1": "Developing the official website and organizational information channels.",
-    "text4Paraghraph2": "Publishing newsletters or internal communication media.",
-    "text4Paraghraph3": "Building relationships with maritime agencies and national media."
-  },
-  "ProgramJangkaMenengah": {
-    "title": "Medium-Term Program (3 Years)",
-    "paragraph1": "1. Professional Capacity Development",
-    "text1Paraghraph1": "Establishing a Maritime Pilot Training and Professional Development Center.",
-    "text1Paraghraph2": "Conducting advanced training, ship simulation, and inter-port comparative studies.",
-    "text1Paraghraph3": "Forming a digital-based Continuous Professional Development (CPD) system.",
-    "paragraph2": "2. Safety and Technology",
-    "text2Paraghraph1": "Developing national pilotage safety operational standards.",
-    "text2Paraghraph2": "Adopting navigation technology, radar simulation, and vessel tracking for pilotage activities.",
-    "text2Paraghraph3": "Preparing technical recommendations for the government related to maritime safety.",
-    "paragraph3": "3. Cooperation and National Recognition",
-    "text3Paraghraph1": "Becoming an official partner of the Ministry of Transportation, Port Authorities, and INAMPA in pilotage affairs.",
-    "text3Paraghraph2": "Cooperating with universities and maritime research institutions.",
-    "text3Paraghraph3": "Actively participating in the formulation of national pilotage policies.",
-    "paragraph4": "4. Welfare and Solidarity",
-    "text4Paraghraph1": "Establishing a Maritime Pilot Professional Solidarity Fund.",
-    "text4Paraghraph2": "Organizing social activities and maritime service programs in coastal areas.",
-    "text4Paraghraph3": "Developing welfare, health, and insurance programs for members."
-  },
-  "ProgramJangkaPanjang": {
-    "title": "Long-Term Program (5 Years)",
-    "paragraph1": "1. Organizational Independence",
-    "text1Paraghraph1": "Constructing a national secretariat building and pilot activity center.",
-    "text1Paraghraph2": "Developing business units or professional cooperatives to support organizational activities.",
-    "text1Paraghraph3": "Implementing an organizational quality management system (ISO or equivalent).",
-    "paragraph2": "2. International Recognition",
-    "text2Paraghraph1": "Becoming an active member of the International Maritime Pilots’ Association (IMPA) and similar organizations.",
-    "text2Paraghraph2": "Increasing participation in international forums and conferences.",
-    "text2Paraghraph3": "Promoting Indonesian maritime pilots as expert professionals in the global arena.",
-    "paragraph3": "3. Innovation and National Contribution",
-    "text3Paraghraph1": "Encouraging research and innovation in pilotage technology to support Smart Ports and Green Ports.",
-    "text3Paraghraph2": "Actively contributing to the formulation of national policies on maritime safety and efficiency.",
-    "text3Paraghraph3": "Developing international-standard education and training systems for the next generation of pilots.",
-    "paragraph4": "4. Preservation of Values and Regeneration",
-    "text4Paraghraph1": "Establishing a pilot cadre development and mentoring institute.",
-    "text4Paraghraph2": "Fostering a professional, ethical, and nationally minded work culture.",
-    "text4Paraghraph3": "Affirming the maritime pilot profession as a strategic component in Indonesia’s maritime sovereignty."
+    "organization": "Organization"
   }
 }

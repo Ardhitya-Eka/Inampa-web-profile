@@ -5,8 +5,6 @@ import VisiMisi from "@/components/layouts/VisiMisiLayouts/VisiMisi";
 
 import ProgramKerja from "@/components/layouts/ProgramKerjaLayouts/ProgramKerja";
 
-import { GetStaticPropsContext } from "next";
-
 import BannerLayouts from "@/components/layouts/Banner/BannerLayouts";
 
 const Home = () => {
@@ -47,13 +45,5 @@ const Home = () => {
     </div>
   );
 };
-
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: (await import(`../../messages/${locale}`)).default,
-    },
-  };
-}
 
 export default Home;

@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,12 +5,29 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "@/../../public/Logo Inampa.png";
 import TogleLanguage from "@/components/ui/button/TogleLanguage";
-import { useTranslations } from "next-intl";
 
 import { useRouter } from "next/router";
 import { FiSettings } from "react-icons/fi";
 
 const Navbar = () => {
+  //routing ID dan EN
+  const { locale } = useRouter();
+  // Ubah Navbar Disini EN dan ID
+  const navbar = {
+    id: {
+      home: "Beranda",
+      organisasi: "Organisasi",
+      media: "Media",
+    },
+    en: {
+      home: "Home",
+      organisasi: "Organization",
+      media: "Media",
+    },
+  };
+  //Cek NAVBAR ID DAN EN
+  const navbarChangeLanguage = locale === "id" ? navbar.id : navbar.en;
+  // DATA NAVBAR ORGANISASI
   const organisasi = [
     {
       id: 1,
@@ -65,7 +80,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const t = useTranslations("Navbar");
   const router = useRouter();
 
   const handleClick = () => {
@@ -109,7 +123,7 @@ const Navbar = () => {
           }
         >
           <a href="/" className="hover:text-blue-600 transition">
-            {t("home")}
+            {navbarChangeLanguage.home}
           </a>
 
           {/* ORGANISASI DROPDOWN */}
@@ -122,7 +136,7 @@ const Navbar = () => {
               }}
               className="flex items-center gap-1"
             >
-              {t("organization")}
+              {navbarChangeLanguage.organisasi}
               {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             <AnimatePresence>
@@ -158,7 +172,7 @@ const Navbar = () => {
               }}
               className="flex items-center gap-1"
             >
-              {t("media")}
+              {navbarChangeLanguage.media}
               {isMediaOpen ? (
                 <ChevronUp size={20} />
               ) : (
@@ -178,19 +192,19 @@ const Navbar = () => {
                     href="/media/nasional"
                     className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
                   >
-                    {t("nasional")}
+                    {locale === "id" ? "Nasional" : "National"}
                   </motion.a>
                   <motion.a
                     href="/media/internasional"
                     className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
                   >
-                    {t("internasional")}
+                    {locale === "id" ? "Internasional" : "International"}
                   </motion.a>
                   <motion.a
                     href="/media/certificate"
                     className="block px-2 py-2 text-sm text-gray-700 rounded-md mx-auto hover:text-gray-500"
                   >
-                    {t("certificate")}
+                    {locale === "id" ? "Sertifikat" : "Certificate"}
                   </motion.a>
                 </motion.div>
               )}
@@ -236,7 +250,7 @@ const Navbar = () => {
             <div className="border-t border-gray-200 pt-2 mt-2">
               <div>
                 <div className="text-sm font-medium text-gray-500 mb-2">
-                  {t("organization")}
+                  {navbarChangeLanguage.organisasi}
                 </div>
                 {organisasi.map((item) => (
                   <motion.a
@@ -251,28 +265,28 @@ const Navbar = () => {
             </div>
             <div className="border-t border-gray-200 pt-2 mt-2">
               <div className="text-sm font-medium text-gray-500 mb-2">
-                {t("media")}
+                {navbarChangeLanguage.media}
               </div>
               <a
                 href="/media/nasional"
                 className="block py-1 pl-4 text-sm hover:text-blue-600"
                 onClick={() => setMenuOpen(false)}
               >
-                {t("nasional")}
+                {locale === "id" ? "Nasional" : "National"}
               </a>
               <a
                 href="/media/internasional"
                 className="block py-1 pl-4 text-sm hover:text-blue-600"
                 onClick={() => setMenuOpen(false)}
               >
-                {t("internasional")}
+                {locale === "id" ? "Internasional" : "International"}
               </a>
               <a
                 href="/media/certificate"
                 className="block py-1 pl-4 text-sm hover:text-blue-600"
                 onClick={() => setMenuOpen(false)}
               >
-                {t("certificate")}
+                {locale === "id" ? "Sertifikat" : "Certificate"}
               </a>
             </div>
           </nav>

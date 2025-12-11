@@ -1,99 +1,10 @@
 {
   "Navbar": {
     "home": "Beranda",
-    "about": "Tentang Kami",
-    "Gallery": "Galeri",
     "media": "Media",
     "nasional": "Nasional",
     "internasional": "Internasional",
     "certificate": "Sertifikat",
-    "contact": "Kontak",
     "organization": "Organisasi"
-  },
-  "banner": {
-    "title": "Selamat Datang di Website",
-    "subtitle": "Indonesian Maritime Pilot’s Association (INAMPA)"
-  },
-  "about": {
-    "titleAbout": "Tentang Kami",
-    "paragraph1": "(INAMPA) - Berdiri sejak tanggal 11 Maret 2003 dan merupakan organisasi profesi Perwira Pandu Maritim Indonesia yang bertugas di instansi pemerintah pusat dan daerah, BUMN, BUMD, badan usaha swasta, serta institusi lainnya, termasuk yang berada di luar negeri",
-    "paragraph2": "Perwira Pandu adalah profesi mahal karena memiliki: peran kunci, langka, keahlian khusus dan banyak dibutuhkan. Saat ini memiliki anggota ± 1.200 orang tersebar dipenjuru Nusantara mulai dari Sabang sampai Merauke, dari Miangas sampai Rote dengan tugas utama dalam perspektif:",
-    "paragraph3": "Dalam menjalankan tugas mulia ini, Perwira Pandu Maritim berpegang pada atribut hukum dan konvensi yang mencakup:",
-    "paragraph4": "Perwira Pandu Maritim telah berkontribusi besar dalam Keselamatan Maritim Indonesia bagi Kapal Niaga dan Non Niaga yang masuk/keluar pelabuhan di Indonesia termasuk di perairan lainnya yang membutuhkan jasa berlayar secara safe, secure, dan efisien serta efektif, dan kegiatan ini berkaitan erat dengan daya saing Indonesia di Sektor Kemaritiman dan turun aktifikitasnya.",
-    "paragraph5": "Sejak tahun 2017 s/d saat ini INAMPA telah menjadi anggota International Maritime Pilots’ Association (IMPA), dimana IMPA menjadi mitra strategis IMO (International Maritime Organization) Badan PBB yang mengurusi Keselamatan Maritim Dunia dengan anggota ± 185 Negara."
-  },
-  "visi": {
-    "title": "Visi",
-    "text": "Menjadi organisasi profesi para Perwira Pandu Maritim Indonesia yang profesional, berintegritas, dan berdaya saing global dalam mendukung keselamatan, keamanan, dan efisiensi pelayaran nasional serta internasional."
-  },
-  "misi": {
-    "title": "Misi",
-    "text1": "1. Meningkatkan kompetensi dan profesionalisme para Perwira Pandu Maritim melalui pendidikan, pelatihan, sertifikasi, dan pengembangan berkelanjutan sesuai dengan standar nasional dan internasional.",
-    "text2": "2. Menegakkan etika profesi dan integritas dalam setiap pelaksanaan tugas Kepanduan guna menjamin keselamatan dan keamanan pelayaran.",
-    "text3": "3. Membangun kolaborasi strategis dengan pemerintah, otoritas pelabuhan, asosiasi pelayaran, lembaga pendidikan, dan organisasi maritim internasional untuk mendukung kemajuan sektor kemaritiman Indonesia.",
-    "text4": "4. Mendorong inovasi dan penggunaan teknologi maritim modern dalam kegiatan Kepanduan untuk meningkatkan efisiensi dan efektivitas pelayanan pemanduan.",
-    "text5": "5. Menjadi mitra pemerintah dalam perumusan kebijakan maritim yang berpihak pada peningkatan keselamatan pelayaran, perlindungan lingkungan laut, dan kesejahteraan profesi Pandu.",
-    "text6": "6. Menumbuhkan rasa persaudaraan, solidaritas, dan kebanggaan profesi di antara seluruh Perwira Pandu Maritim Indonesia."
-  },
-
-  "titleGaleri": {
-    "title": "Galeri INAMPA"
-  },
-  "ProgramJangkaPendek": {
-    "title": "Program Jangka Pendek",
-    "paragraph1": "1. Kelembagaan dan Keanggotaan",
-    "text1Paraghraph1": "Menyusun dan menetapkan AD/ART, kode etik profesi, serta struktur organisasi pusat dan wilayah.",
-    "text1Paraghraph2": "Melakukan pendataan nasional seluruh perwira pandu maritim Indonesia.",
-    "text1Paraghraph3": "Membentuk pengurus wilayah di pelabuhan-pelabuhan utama.",
-    "paragraph2": "2. Peningkatan Kompetensi",
-    "text2Paraghraph1": "Menyelenggarakan workshop, seminar, dan pelatihan dasar profesi kepanduan..",
-    "text2Paraghraph2": "Menyusun kurikulum pelatihan internal berbasis SKKNI dan IMO Standard.",
-    "text2Paraghraph3": "Melakukan sertifikasi ulang (re-validation) bagi anggota sesuai kompetensi.",
-    "paragraph3": "3. Advokasi dan Etika Profesi",
-    "text3Paraghraph1": "Menyusun dan mensosialisasikan Kode Etik Perwira Pandu Maritim.",
-    "text3Paraghraph2": "Membentuk tim advokasi dan bantuan hukum bagi anggota.",
-    "text3Paraghraph3": "Meningkatkan kesadaran tentang keselamatan pelayaran dan etos kerja profesional.",
-    "paragraph4": "4. Publikasi dan Komunikasi",
-    "text4Paraghraph1": "Membangun website resmi dan kanal informasi organisasi.",
-    "text4Paraghraph2": "Menerbitkan buletin atau media komunikasi internal.",
-    "text4Paraghraph3": "Menjalin hubungan dengan instansi maritim dan media nasional."
-  },
-  "ProgramJangkaMenengah": {
-    "title": "Program Jangka Menengah (3 Tahun)",
-    "paragraph1": "1. Pengembangan Kapasitas Profesi",
-    "text1Paraghraph1": "Mendirikan Pusat Diklat dan Pengembangan Profesi Pandu Maritim.",
-    "text1Paraghraph2": "Menyelenggarakan pelatihan lanjutan, simulasi kapal, dan studi banding antar pelabuhan.",
-    "text1Paraghraph3": "Membentuk sistem Continuous Professional Development (CPD) berbasis digital.",
-    "paragraph2": "2. Keselamatan dan Teknologi",
-    "text2Paraghraph1": "Mengembangkan standar operasional keselamatan pandu nasional.",
-    "text2Paraghraph2": "Mengadopsi teknologi navigasi, radar simulation, dan vessel tracking untuk kegiatan pandu.",
-    "text2Paraghraph3": "Menyusun rekomendasi teknis kepada pemerintah terkait keselamatan pelayaran",
-    "paragraph3": "3. Kerja Sama dan Pengakuan Nasional",
-    "text3Paraghraph1": "Menjadi mitra resmi Kementerian Perhubungan, Otoritas Pelabuhan, dan INAMPA dalam bidang kepanduan.",
-    "text3Paraghraph2": "Menjalin kerja sama dengan perguruan tinggi dan lembaga riset maritim.",
-    "text3Paraghraph3": "Berperan aktif dalam perumusan kebijakan nasional tentang kepanduan.",
-    "paragraph4": "4. Kesejahteraan dan Solidaritas",
-    "text4Paraghraph1": "Membentuk Dana Solidaritas Profesi Pandu.",
-    "text4Paraghraph2": "Menyelenggarakan kegiatan sosial dan bakti maritim di wilayah pesisir.",
-    "text4Paraghraph3": "Mengembangkan program kesejahteraan, kesehatan, dan asuransi bagi anggota."
-  },
-  "ProgramJangkaPanjang": {
-    "title": "Program Jangka Panjang (5 Tahun)",
-    "paragraph1": "1. Kemandirian Organisasi",
-    "text1Paraghraph1": "Membangun gedung sekretariat nasional dan pusat kegiatan pandu.",
-    "text1Paraghraph2": "Mengembangkan unit usaha atau koperasi profesi untuk mendukung kegiatan organisasi.",
-    "text1Paraghraph3": "Mengimplementasikan sistem manajemen mutu organisasi (ISO atau sejenisnya).",
-    "paragraph2": "2. Pengakuan Internasional",
-    "text2Paraghraph1": "Menjadi anggota aktif International Maritime Pilots’ Association (IMPA) dan organisasi sejenis.",
-    "text2Paraghraph2": "Meningkatkan partisipasi dalam forum dan konferensi internasional.",
-    "text2Paraghraph3": "Mempromosikan perwira pandu Indonesia sebagai tenaga ahli di kancah global.",
-    "paragraph3": "3. Inovasi dan Kontribusi Nasional",
-    "text3Paraghraph1": "Mendorong riset dan inovasi teknologi pandu dalam mendukung Smart Port dan Green Port.",
-    "text3Paraghraph2": "Berperan aktif dalam penyusunan kebijakan nasional keselamatan dan efisiensi pelayaran.",
-    "text3Paraghraph3": "Mengembangkan sistem pendidikan dan pelatihan berstandar internasional bagi generasi penerus pandu.",
-    "paragraph4": "4. Pelestarian Nilai dan Regenerasi",
-    "text4Paraghraph1": "Membentuk lembaga kaderisasi dan mentoring pandu muda.",
-    "text4Paraghraph2": "Menumbuhkan budaya kerja profesional, beretika, dan berwawasan kebangsaan.",
-    "text4Paraghraph3": "Mengukuhkan profesi pandu maritim sebagai bagian strategis dalam kedaulatan maritim Indonesia."
   }
 }
