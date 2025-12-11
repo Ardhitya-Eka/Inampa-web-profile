@@ -1,40 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+INAMPA.org Website 🌊
 
-## Getting Started
+Repository ini berisi kode sumber untuk INAMPA.org
+ — situs resmi Indonesian Maritime Pilots’ Association (INAMPA).
 
-First, run the development server:
+🔹 Tentang
 
-```bash
+INAMPA.org adalah platform web untuk:
+
+Menampilkan profil dan sejarah INAMPA
+
+Berita, publikasi, dan kegiatan anggota
+
+Informasi visi, misi, program, dan kontak organisasi
+
+Website ini dibangun untuk menyediakan informasi yang mudah diakses bagi anggota, pemerintah, dan publik terkait profesi pandu maritim Indonesia.
+
+🛠️🛠️ Teknologi
+
+Frontend: Next.js
+ (React Framework)
+
+Styling: Tailwind CSS
+
+Backend & Hosting: Firebase
+
+Firestore untuk database
+
+Firebase Hosting untuk deployment
+
+Firebase Functions untuk API (opsional)
+
+💻 Instalasi & Pengembangan Lokal
+
+Clone repository:
+
+git clone https://github.com/username/inampa.org.git
+cd inampa.org
+
+
+Install dependencies:
+
+npm install
+# atau
+yarn install
+
+
+Setup Firebase:
+
+Buat proyek di Firebase Console
+
+Copy konfigurasi Firebase ( Cek Firebase Documentation ) ke file .env.local:
+
+NEXT_PUBLIC_ADMIN_UID="xxxx"
+ADMIN_EMAIL="xxxx"
+CLOUDINARY_CLOUD_NAME="xxxx"
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="xxxx"
+CLOUDINARY_API_KEY="xxxx"
+CLOUDINARY_API_SECRET="xxxx"
+NEXT_PUBLIC_FIREBASE_API_KEY="xxxx"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="xxxx"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="xxxx"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="xxxx"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="xxxx"
+NEXT_PUBLIC_FIREBASE_APP_ID="xxxx"
+NEXT_MEASUREMENT_ID="xxxx"
+FIREBASE_PROJECT_ID="xxxx"
+FIREBASE_CLIENT_EMAIL="xxxx"
+
+
+Jalankan server lokal:
+
 npm run dev
-# or
+# atau
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Buka browser di http://localhost:3000
+🚀 Fitur
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Halaman beranda dengan ringkasan organisasi
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+Profil, visi, misi, dan struktur organisasi
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Form kontak dan Media
 
-## Learn More
+Integrasi media sosial
 
-To learn more about Next.js, take a look at the following resources:
+📝 Kontribusi
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+Kontribusi diterima dalam bentuk:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Bug fix
 
-## Deploy on Vercel
+Penambahan fitur baru
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Dokumentasi
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Silakan fork repo, buat branch baru, dan kirim pull request.
+
+📄 Lisensi
+
+Kode dan konten website ini dilisensikan di bawah Creative Commons Attribution 4.0 International (CC BY Ardhitya Eka Darmawan)
+.
+
+Anda bebas untuk:
+
+Membagikan — menyalin dan mendistribusikan ulang materi dalam format apa pun
+
+Menyesuaikan — mengubah, mengadaptasi, dan membangun di atas materi untuk tujuan apa pun
+
+Dengan syarat: memberikan kredit yang sesuai kepada INAMPA.
+
+📬 Kontak
+
+Website: https://inampa.org
+
+Email: dppinampa10@gmail.com
